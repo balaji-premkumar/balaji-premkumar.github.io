@@ -1,5 +1,4 @@
 import React from 'react';
-import {LanguageBoxProps} from "./LanguagesProps";
 import LanguageBox from "../LanguageBox";
 
 const LanguagesComponent = () => {
