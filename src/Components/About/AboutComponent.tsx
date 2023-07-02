@@ -3,7 +3,7 @@ import mypic from "../../images/mypic.jpg";
 
 const AboutComponent = () => {
     return (
-        <div className="flex flex-col items-center justify-center h-full p-8 space-y-8">
+        <div className="flex flex-col items-center md:justify-center h-full p-8 space-y-8">
             <img
                 src={mypic}
                 alt="Balaji Premkumar"
@@ -13,7 +13,7 @@ const AboutComponent = () => {
             <p className="text-4xl text-center">
                 Full Stack Engineer
             </p>
-            <p className={"text-3xl text-justify"}>
+            <p className={"md:text-3xl text-xl text-justify"}>
                 A 10-year-old full-stack engineer with expertise in frontend, backend, databases, and server
                 technologies. Possesses a strong foundation in both client-side and server-side development, along with
                 the ability to work with various databases. Skilled in building robust and scalable web applications,

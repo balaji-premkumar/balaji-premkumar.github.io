@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import React, {useState} from 'react';
+import {HashRouter as Router, Route, Routes} from 'react-router-dom';
 import './App.css';
 import SidebarComponent from "./Components/Sidebar/SidebarComponent";
 import LanguagesComponent from "./Components/Languages/LanguagesComponent";
@@ -17,7 +17,7 @@ function App() {
     }
     return (
         <Router>
-            <div className="md:flex font-sans">
+            <div className="md:flex font-sans overflow-y-auto">
                 <div className="flex justify-between items-center md:hidden mx-4">
                     <h1 className={"font-sans font-bold text-xl"}>Balaji Premkumar</h1>
                     <button className="p-4" onClick={() => toggleSidebar()}>
