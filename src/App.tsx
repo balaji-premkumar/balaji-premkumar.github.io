@@ -1,57 +1,51 @@
-import React, {useState} from 'react';
-import {HashRouter as Router, Route, Routes} from 'react-router-dom';
-import './App.css';
-import SidebarComponent from "./Components/Sidebar/SidebarComponent";
-import LanguagesComponent from "./Components/Languages/LanguagesComponent";
-import DatabasesComponent from "./Components/Databases/DatabasesComponent";
-import UIComponent from "./Components/UIFrameworks/UIComponent";
-import ExperienceComponent from "./Components/Experience/ExperienceComponent";
-import ContactComponent from "./Components/Contact/ContactComponent";
-import {FiMenu} from "react-icons/fi";
-import AboutComponent from "./Components/About/AboutComponent";
+import React from 'react';
+import './index.css';
+import HeroSection from './components/HeroSection';
+import AboutSection from './components/AboutSection';
+import ExperienceSection from './components/ExperienceSection';
+import SkillsSection from './components/SkillsSection';
+import ProjectsSection from './components/ProjectsSection';
+import ContactSection from './components/ContactSection';
+import Navigation from './components/Navigation';
+import FloatingElements from './components/FloatingElements';
+import CharacterAnimations from './components/CharacterAnimations';
+import { useActiveSection } from './hooks/useActiveSection';
 
 function App() {
-    const [isOpen, setIsOpen] = useState(false);
-    const toggleSidebar = () => {
-        setIsOpen(!isOpen);
-    }
-    return (
-        <Router>
-            <div className="md:flex font-sans overflow-y-auto">
-                <div className="flex justify-between items-center md:hidden mx-4">
-                    <h1 className={"font-sans font-bold text-xl"}>Balaji Premkumar</h1>
-                    <button className="p-4" onClick={() => toggleSidebar()}>
-                        <FiMenu className="h-6 w-6"/>
-                    </button>
-                </div>
-                <div className={`md:hidden bg-gray-900 text-white ${isOpen ? 'block' : 'hidden'}`}>
-                    <SidebarComponent toggleSidebar={toggleSidebar} showHeader={false}/>
-                </div>
+  const activeSection = useActiveSection();
 
-                <div className="hidden md:block md:w-1/4 h-screen sticky top-0 bg-gray-900 text-white">
-                    <SidebarComponent toggleSidebar={false} showHeader={true}/>
-                </div>
-                <div className="md:w-3/4 h-screen overflow-y-scroll bg-gray-200">
-                    <RoutePaths/>
-                </div>
-            </div>
-        </Router>
-    );
-
-
-}
-
-const RoutePaths = () => {
-    return (
-        <Routes>
-            <Route path={"/"} element={<AboutComponent/>}/>
-            <Route path="/languages" element={<LanguagesComponent/>}/>
-            <Route path="/databases" element={<DatabasesComponent/>}/>
-            <Route path="/ui-frameworks" element={<UIComponent/>}/>
-            <Route path="/experience" element={<ExperienceComponent/>}/>
-            <Route path="/contact" element={<ContactComponent/>}/>
-        </Routes>
-    );
+  return (
+    <div className="relative min-h-screen bg-ocean-gradient overflow-x-hidden">
+      {/* Floating background elements */}
+      <FloatingElements />
+      
+      {/* Navigation */}
+      <Navigation />
+      
+      {/* Character Animations */}
+      <CharacterAnimations currentSection={activeSection} />
+      
+      {/* Main content */}
+      <main>
+        <HeroSection />
+        <AboutSection />
+        <ExperienceSection />
+        <SkillsSection />
+        <ProjectsSection />
+        <ContactSection />
+      </main>
+      
+      {/* Footer */}
+      <footer className="bg-one-piece-deep-blue text-one-piece-gold text-center py-8 border-t border-one-piece-gold/20">
+        <p className="text-lg font-pirate">
+          "The One Piece is real!" - Balaji Premkumar, Code Pirate 🏴‍☠️
+        </p>
+        <p className="text-sm mt-2 opacity-80">
+          © 2025 Balaji Premkumar. All treasures reserved.
+        </p>
+      </footer>
+    </div>
+  );
 }
 
 export default App;

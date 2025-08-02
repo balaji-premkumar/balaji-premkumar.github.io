@@ -1,33 +1,57 @@
 {
   "homepage": "https://balaji-premkumar.github.io",
-  "name": "my-portfolio",
+  "name": "onepiece-portfolio",
   "version": "1.0.0",
   "private": true,
+  "description": "One Piece themed portfolio website for Balaji Premkumar - Full Stack Engineer",
+  "keywords": [
+    "portfolio",
+    "react",
+    "typescript",
+    "tailwindcss",
+    "one-piece",
+    "fullstack",
+    "developer"
+  ],
+  "author": {
+    "name": "Balaji Premkumar",
+    "email": "balaji0710@gmail.com",
+    "url": "https://github.com/balaji0710"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/balaji-premkumar/balaji-premkumar.github.io.git"
+  },
+  "bugs": {
+    "url": "https://github.com/balaji-premkumar/balaji-premkumar.github.io/issues"
+  },
+  "license": "MIT",
   "dependencies": {
-    "@headlessui/react": "^1.7.15",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.3.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.11.56",
-    "@types/react": "^18.0.17",
-    "@types/react-dom": "^18.0.6",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-icons": "^4.10.1",
-    "react-router-dom": "^6.14.1",
+    "@react-three/drei": "^9.114.0",
+    "@react-three/fiber": "^8.17.10",
+    "@types/node": "^20.11.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/three": "^0.170.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.0.0",
     "react-scripts": "5.0.1",
-    "react-transition-group": "^4.4.5",
-    "typescript": "^4.7.4",
-    "web-vitals": "^2.1.4"
+    "three": "^0.170.0",
+    "typescript": "^4.9.5",
+    "web-vitals": "^4.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build --static-folder=static",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "type-check": "tsc --noEmit",
+    "analyze": "npm run build && npx source-map-explorer 'build/static/js/*.js'"
   },
   "eslintConfig": {
     "extends": [
@@ -48,9 +72,18 @@
     ]
   },
   "devDependencies": {
-    "@types/react-transition-group": "^4.4.6",
-    "gh-pages": "^4.0.0",
-    "sass": "^1.63.6",
-    "tailwindcss": "^3.3.2"
-  }
+    "@testing-library/jest-dom": "^6.4.0",
+    "@testing-library/react": "^16.0.0",
+    "@testing-library/user-event": "^14.5.0",
+    "autoprefixer": "^10.4.17",
+    "gh-pages": "^6.1.0",
+    "postcss": "^8.4.33",
+    "tailwindcss": "^3.4.1",
+    "source-map-explorer": "^2.5.3"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "packageManager": "npm@10.2.4"
 }
