@@ -36,9 +36,17 @@ const Header: React.FC = () => {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      // Close menu first for immediate feedback
+      setIsMenuOpen(false);
+      
+      // Small delay to ensure menu closes before scrolling
+      setTimeout(() => {
+        element.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }, 100);
     }
-    setIsMenuOpen(false);
   };
 
   return (
@@ -162,7 +170,9 @@ const Header: React.FC = () => {
               }}
               whileTap={{ scale: 0.9 }}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-3 rounded-full bg-white/20 dark:bg-white/10 backdrop-blur-md border border-white/30 dark:border-white/20 text-gray-700 dark:text-gray-300 hover:bg-white/30 dark:hover:bg-white/20 transition-all duration-300 shadow-lg"
+              aria-label="Toggle mobile menu"
+              aria-expanded={isMenuOpen}
+              className="md:hidden p-3 rounded-full bg-white/20 dark:bg-white/10 backdrop-blur-md border border-white/30 dark:border-white/20 text-gray-700 dark:text-gray-300 hover:bg-white/30 dark:hover:bg-white/20 transition-all duration-300 shadow-lg touch-manipulation"
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </motion.button>
@@ -189,7 +199,7 @@ const Header: React.FC = () => {
                   }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => scrollToSection(item.id)}
-                  className={`relative block w-full text-left px-4 py-3 rounded-full text-sm font-medium transition-all duration-300 backdrop-blur-md border ${
+                  className={`relative block w-full text-left px-4 py-3 rounded-full text-sm font-medium transition-all duration-300 backdrop-blur-md border touch-manipulation ${
                     activeSection === item.id
                       ? 'bg-white/20 dark:bg-white/10 border-white/30 dark:border-white/20 text-primary-600 dark:text-primary-400 shadow-lg shadow-primary-500/20'
                       : 'bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20 text-gray-700 dark:text-gray-300 hover:bg-white/20 dark:hover:bg-white/10 hover:border-white/40 dark:hover:border-white/30 hover:text-primary-600 dark:hover:text-primary-400 hover:shadow-lg hover:shadow-primary-500/10'
