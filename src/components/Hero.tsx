@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown, Github, Mail, MapPin, Download } from 'lucide-react';
+import { ChevronDown, Github, Mail, MapPin } from 'lucide-react';
 import { PERSONAL_INFO, HERO_ROLES, STATS, SOCIAL_LINKS } from '../constants';
 import GitHubAvatar from './GitHubAvatar';
 
@@ -67,7 +67,7 @@ const Hero: React.FC = () => {
   return (
     <motion.section 
       id="home" 
-      className="min-h-screen flex items-center justify-center relative bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 overflow-hidden"
+      className="min-h-screen flex items-center justify-center relative bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 overflow-hidden pt-20"
     >
       {/* Static background elements */}
       <div className="absolute inset-0 overflow-hidden z-10">
@@ -197,17 +197,6 @@ const Hero: React.FC = () => {
               Explore My Work
               <ChevronDown size={20} />
             </motion.button>
-            
-            <motion.a
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              href="/resume.pdf"
-              download
-              className="px-8 py-3 border-2 border-primary-600 text-primary-600 dark:text-primary-400 hover:bg-primary-600 hover:text-white rounded-lg font-medium transition-colors flex items-center gap-2"
-            >
-              <Download size={20} />
-              Download Resume
-            </motion.a>
           </motion.div>
 
           {/* Social Links */}

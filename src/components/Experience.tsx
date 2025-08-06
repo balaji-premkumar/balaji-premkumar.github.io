@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, MapPin, ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
+import { Calendar, MapPin, ChevronDown, ChevronUp } from 'lucide-react';
 import { EXPERIENCES } from '../constants';
 
 const Experience: React.FC = () => {
@@ -190,20 +190,6 @@ const Experience: React.FC = () => {
               ))}
             </div>
           </div>
-
-          {/* Call to action */}
-          <motion.div variants={itemVariants} className="text-center mt-16">
-            <motion.a
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              href="/resume.pdf"
-              download
-              className="inline-flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium transition-colors"
-            >
-              <ExternalLink size={20} />
-              View Full Resume
-            </motion.a>
-          </motion.div>
         </motion.div>
       </div>
     </section>

@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, Github, Mail, Sun, Moon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { NAV_ITEMS, PERSONAL_INFO, SOCIAL_URLS } from '../constants';
+import { useTheme } from '../hooks/useTheme';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-  const [isDark, setIsDark] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { isDark, toggleTheme, isFollowingSystem } = useTheme();
 
   const navItems = NAV_ITEMS;
 
@@ -33,16 +34,17 @@ const Header: React.FC = () => {
   }, [navItems]);
 
   const scrollToSection = (sectionId: string) => {
+    console.log('scrollToSection called with:', sectionId);
     const element = document.getElementById(sectionId);
+    console.log('Found element:', element);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
+      console.log('Scrolling to element:', sectionId);
+    } else {
+      console.error('Element not found:', sectionId);
     }
     setIsMenuOpen(false);
-  };
-
-  const toggleTheme = () => {
-    setIsDark(!isDark);
-    document.documentElement.classList.toggle('dark');
+    console.log('Menu closed');
   };
 
   return (
@@ -120,9 +122,14 @@ const Header: React.FC = () => {
               }}
               whileTap={{ scale: 0.9 }}
               onClick={toggleTheme}
-              className="p-3 rounded-full bg-white/20 dark:bg-white/10 backdrop-blur-md border border-white/30 dark:border-white/20 text-gray-700 dark:text-gray-300 hover:bg-white/30 dark:hover:bg-white/20 transition-all duration-300 shadow-lg"
+              title={`Switch to ${isDark ? 'light' : 'dark'} mode${isFollowingSystem ? ' (Following system)' : ''}`}
+              className="p-3 rounded-full bg-white/20 dark:bg-white/10 backdrop-blur-md border border-white/30 dark:border-white/20 text-gray-700 dark:text-gray-300 hover:bg-white/30 dark:hover:bg-white/20 transition-all duration-300 shadow-lg relative"
             >
               {isDark ? <Sun size={18} /> : <Moon size={18} />}
+              {/* System preference indicator */}
+              {isFollowingSystem && (
+                <div className="absolute -top-1 -right-1 w-2 h-2 bg-primary-500 rounded-full animate-pulse" title="Following system preference" />
+              )}
             </motion.button>
 
             {/* Social links */}
