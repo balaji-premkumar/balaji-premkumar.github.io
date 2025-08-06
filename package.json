@@ -25,9 +25,10 @@
     "dev": "vite",
     "start": "vite",
     "build": "tsc && vite build",
+    "build:gh-pages": "tsc && vite build --base=/",
     "preview": "vite preview",
     "test": "vitest",
-    "predeploy": "npm run build",
+    "predeploy": "npm run build:gh-pages",
     "deploy": "gh-pages -d dist"
   },
   "eslintConfig": {

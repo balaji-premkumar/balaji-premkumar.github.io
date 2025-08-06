@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Pages Deployment Diagnostic</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+        .pass { background: #d4edda; color: #155724; }
+        .fail { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #0056b3; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+        .test-result { margin: 10px 0; padding: 10px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 GitHub Pages Deployment Diagnostic</h1>
+        <p>This tool helps diagnose UI issues with your deployed portfolio site.</p>
+
+        <div class="section">
+            <h2>🌐 Current Deployment Status</h2>
+            <div class="grid">
+                <div>
+                    <h3>Live Site</h3>
+                    <button onclick="openSite('https://balaji-premkumar.github.io')">Open Live Site</button>
+                    <button onclick="testSiteResources('https://balaji-premkumar.github.io')">Test Resources</button>
+                    <div id="live-status" class="test-result info">Click buttons to test</div>
+                </div>
+                <div>
+                    <h3>Local Development</h3>
+                    <button onclick="openSite('http://localhost:3000')">Open Local</button>
+                    <button onclick="testSiteResources('http://localhost:3000')">Test Local Resources</button>
+                    <div id="local-status" class="test-result info">Make sure dev server is running</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🎨 Common UI Issues Checklist</h2>
+            <div id="checklist">
+                <h3>CSS & Styling Issues:</h3>
+                <label><input type="checkbox"> Tailwind CSS classes not applying</label><br>
+                <label><input type="checkbox"> Page appears unstyled (no colors, layout broken)</label><br>
+                <label><input type="checkbox"> Fonts not loading correctly</label><br>
+                <label><input type="checkbox"> Background colors/gradients missing</label><br>
+                <label><input type="checkbox"> Responsive design not working on mobile</label><br>
+                
+                <h3>Interactive Features Issues:</h3>
+                <label><input type="checkbox"> Dark/light mode toggle not working</label><br>
+                <label><input type="checkbox"> Mobile navigation menu not functioning</label><br>
+                <label><input type="checkbox"> Smooth scrolling not working</label><br>
+                <label><input type="checkbox"> Animations/transitions not showing</label><br>
+                <label><input type="checkbox"> Hover effects not working</label><br>
+                
+                <h3>Content Issues:</h3>
+                <label><input type="checkbox"> Icons not displaying (Lucide icons)</label><br>
+                <label><input type="checkbox"> Images not loading</label><br>
+                <label><input type="checkbox"> GitHub profile picture not showing</label><br>
+                <label><input type="checkbox"> Contact form not working</label><br>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🔧 Diagnostic Tests</h2>
+            <button onclick="runAllTests()">Run All Diagnostic Tests</button>
+            <div id="diagnostic-results"></div>
+        </div>
+
+        <div class="section">
+            <h2>📝 Common Solutions</h2>
+            <div class="info" style="padding: 15px;">
+                <h3>If CSS is not loading:</h3>
+                <ul>
+                    <li>Check if Tailwind CSS file is being generated correctly</li>
+                    <li>Verify asset paths in the built HTML file</li>
+                    <li>Ensure base URL configuration is correct</li>
+                </ul>
+                
+                <h3>If JavaScript is not working:</h3>
+                <ul>
+                    <li>Check browser console for JavaScript errors</li>
+                    <li>Verify React bundles are loading correctly</li>
+                    <li>Check if modules are being imported correctly</li>
+                </ul>
+                
+                <h3>If mobile navigation is broken:</h3>
+                <ul>
+                    <li>Test mobile menu button visibility</li>
+                    <li>Check responsive breakpoints (md:hidden classes)</li>
+                    <li>Verify onClick handlers are working</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🚀 Deployment Commands</h2>
+            <div class="info" style="padding: 15px;">
+                <h3>Current Deployment Methods:</h3>
+                <p><strong>Method 1 - npm script (gh-pages):</strong></p>
+                <code style="background: #f8f9fa; padding: 10px; display: block; margin: 10px 0;">
+                    npm run deploy
+                </code>
+                <p>This deploys to gh-pages branch. Make sure GitHub Pages is set to serve from "gh-pages" branch.</p>
+                
+                <p><strong>Method 2 - GitHub Actions:</strong></p>
+                <code style="background: #f8f9fa; padding: 10px; display: block; margin: 10px 0;">
+                    git push origin main
+                </code>
+                <p>This triggers automatic deployment via GitHub Actions. Make sure GitHub Pages is set to "GitHub Actions" source.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openSite(url) {
+            window.open(url, '_blank');
+        }
+
+        function testSiteResources(baseUrl) {
+            const resultId = baseUrl.includes('localhost') ? 'local-status' : 'live-status';
+            const resultDiv = document.getElementById(resultId);
+            
+            resultDiv.innerHTML = '🔄 Testing resources...';
+            resultDiv.className = 'test-result info';
+
+            // Test main page
+            fetch(baseUrl)
+                .then(response => {
+                    if (response.ok) {
+                        resultDiv.innerHTML = '✅ Site is accessible and responding';
+                        resultDiv.className = 'test-result pass';
+                    } else {
+                        resultDiv.innerHTML = `❌ Site returned status: ${response.status}`;
+                        resultDiv.className = 'test-result fail';
+                    }
+                })
+                .catch(error => {
+                    if (baseUrl.includes('localhost')) {
+                        resultDiv.innerHTML = '⚠️ Local server not running. Start with: npm run dev';
+                    } else {
+                        resultDiv.innerHTML = `❌ Cannot reach site: ${error.message}`;
+                    }
+                    resultDiv.className = 'test-result fail';
+                });
+        }
+
+        function runAllTests() {
+            const resultsDiv = document.getElementById('diagnostic-results');
+            resultsDiv.innerHTML = '🔄 Running diagnostic tests...';
+
+            const tests = [
+                { name: 'Live Site Accessibility', url: 'https://balaji-premkumar.github.io' },
+                { name: 'CSS Resource Check', test: () => checkCSSLoading() },
+                { name: 'JavaScript Functionality', test: () => checkJavaScript() },
+                { name: 'Mobile Responsiveness', test: () => checkResponsive() }
+            ];
+
+            let results = '<h3>Diagnostic Results:</h3>';
+            
+            tests.forEach(test => {
+                if (test.url) {
+                    fetch(test.url)
+                        .then(response => {
+                            results += `<div class="test-result ${response.ok ? 'pass' : 'fail'}">
+                                ${test.name}: ${response.ok ? '✅ PASS' : '❌ FAIL'}
+                            </div>`;
+                            resultsDiv.innerHTML = results;
+                        })
+                        .catch(() => {
+                            results += `<div class="test-result fail">${test.name}: ❌ FAIL - Cannot connect</div>`;
+                            resultsDiv.innerHTML = results;
+                        });
+                } else if (test.test) {
+                    const result = test.test();
+                    results += `<div class="test-result ${result.pass ? 'pass' : 'fail'}">
+                        ${test.name}: ${result.pass ? '✅ PASS' : '❌ FAIL'} - ${result.message}
+                    </div>`;
+                }
+            });
+
+            setTimeout(() => {
+                results += '<div class="test-result info">💡 <strong>Next Steps:</strong><br>1. Check the live site manually<br>2. Compare with local development<br>3. Check browser console for errors<br>4. Verify GitHub Pages settings</div>';
+                resultsDiv.innerHTML = results;
+            }, 2000);
+        }
+
+        function checkCSSLoading() {
+            return {
+                pass: document.styleSheets.length > 0,
+                message: `Found ${document.styleSheets.length} stylesheets loaded`
+            };
+        }
+
+        function checkJavaScript() {
+            return {
+                pass: typeof React !== 'undefined' || window.location.href.includes('localhost'),
+                message: 'JavaScript environment check'
+            };
+        }
+
+        function checkResponsive() {
+            return {
+                pass: window.innerWidth > 0,
+                message: `Current viewport: ${window.innerWidth}x${window.innerHeight}`
+            };
+        }
+
+        // Auto-run basic checks on load
+        setTimeout(() => {
+            testSiteResources('https://balaji-premkumar.github.io');
+        }, 1000);
+    </script>
+</body>
+</html>
