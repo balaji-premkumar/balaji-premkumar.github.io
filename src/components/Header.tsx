@@ -34,17 +34,11 @@ const Header: React.FC = () => {
   }, [navItems]);
 
   const scrollToSection = (sectionId: string) => {
-    console.log('scrollToSection called with:', sectionId);
     const element = document.getElementById(sectionId);
-    console.log('Found element:', element);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
-      console.log('Scrolling to element:', sectionId);
-    } else {
-      console.error('Element not found:', sectionId);
     }
     setIsMenuOpen(false);
-    console.log('Menu closed');
   };
 
   return (
