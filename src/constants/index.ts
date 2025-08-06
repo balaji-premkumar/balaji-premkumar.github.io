@@ -36,7 +36,6 @@ export const THEME_COLORS = {
 } as const;
 
 export const EXTERNAL_LINKS = {
-  resume: '/resume.pdf',
   linkedin: 'https://linkedin.com/in/balaji-premkumar',
   twitter: 'https://twitter.com/balaji00710',
   portfolio: 'https://balaji-premkumar.github.io/'

@@ -11,7 +11,7 @@ import './App.css';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
       <Header />
       <Hero />
       <About />

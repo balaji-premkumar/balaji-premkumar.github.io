@@ -1,7 +1,8 @@
 {
-  "homepage": "https://balaji-premkumar.github.io",
+  "homepage": "https://balaji-premkumar.github.io/",
   "name": "balajiportfolio",
   "version": "1.0.0",
+  "type": "module",
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
@@ -9,7 +10,7 @@
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.126",
+    "@types/node": "^20.11.19",
     "@types/react": "^19.1.9",
     "@types/react-dom": "^19.1.7",
     "framer-motion": "^12.23.12",
@@ -17,17 +18,17 @@
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-intersection-observer": "^9.16.0",
-    "react-scripts": "5.0.1",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "dev": "vite",
+    "start": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "eslintConfig": {
     "extends": [
@@ -48,9 +49,14 @@
     ]
   },
   "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "@vitest/ui": "^1.2.2",
     "autoprefixer": "^10.4.21",
     "gh-pages": "^6.3.0",
+    "jsdom": "^24.0.0",
     "postcss": "^8.5.6",
-    "tailwindcss": "^3.4.17"
+    "tailwindcss": "^3.4.17",
+    "vite": "^5.1.4",
+    "vitest": "^1.2.2"
   }
 }
