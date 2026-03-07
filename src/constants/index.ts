@@ -151,8 +151,10 @@ export const experiences = [
     company_name: 'EY GDS India LLP',
     date: '2023 - Present',
     points: [
-      'Working on multiple projects like frontend, backend, message queue etc.',
-      'Using the AI Automation to complete daily day to day process with effeciently.'
+      "Working on full-stack applications using .NET 10 and React.",
+      "Implementing and maintaining backend services utilizing Message Queues and MSSQL.",
+      "Setting up and managing CI/CD pipelines with Azure DevOps and GitHub Actions.",
+      "Leveraging AI tools for development automation to increase overall efficiency."
     ],
   },
   {

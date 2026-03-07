@@ -99,14 +99,14 @@ const Hero = () => {
           >
             View Work
           </motion.a>
-          <motion.a
-            href="#contact"
+          <motion.button
+            onClick={() => window.print()}
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.96 }}
             className="px-8 py-4 border border-border-subtle bg-surface/50 backdrop-blur-sm text-ink font-mono font-bold rounded-full hover:border-muted transition-colors w-full sm:w-auto text-center"
           >
             Download CV
-          </motion.a>
+          </motion.button>
         </div>
       </div>
 

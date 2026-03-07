@@ -61,3 +61,39 @@ body::before {
   background-image: radial-gradient(var(--color-border-subtle) 1px, transparent 1px);
   background-size: 24px 24px;
 }
+
+/* Print optimizations */
+@media print {
+  :root {
+    --color-bg: #ffffff;
+    --color-surface: #f8f9fa;
+    --color-card: #ffffff;
+    --color-ink: #000000;
+    --color-muted: #4b5563;
+    --color-border-subtle: #e5e7eb;
+  }
+  
+  body {
+    background-color: white !important;
+    color: black !important;
+    cursor: auto !important;
+  }
+
+  body::before {
+    display: none !important;
+  }
+  
+  .bg-dot-grid {
+    background-image: none !important;
+  }
+  
+  a, button, input, select, textarea {
+    cursor: auto !important;
+  }
+  
+  /* Reset backdrop blurs and complex shadows for print */
+  * {
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+  }
+}
