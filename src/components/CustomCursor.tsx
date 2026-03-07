@@ -17,7 +17,8 @@ const CustomCursor = () => {
     if (!cursor || !glow) return;
 
     const ctx = gsap.context(() => {
-      // Set initial state - adjust x/y percent so the tip of the arrow is at the actual mouse position
+      // Set initial state
+      // We keep it at opacity 0 initially so it doesn't flash in the top left corner before moving.
       gsap.set(cursor, { xPercent: -15, yPercent: -10, opacity: 0 });
       gsap.set(glow, { xPercent: -50, yPercent: -50, opacity: 0 });
 
@@ -28,9 +29,16 @@ const CustomCursor = () => {
       const xToGlow = gsap.quickTo(glow, "x", { duration: 0.15, ease: "power2.out" });
       const yToGlow = gsap.quickTo(glow, "y", { duration: 0.15, ease: "power2.out" });
 
+      // Check if mouse is already in window on mount
+      const isTouch = window.matchMedia('(pointer: coarse)').matches;
+      let hasMoved = false;
+
       const onMouseMove = (e: MouseEvent) => {
-        // Show cursor when it moves (in case it was hidden)
-        gsap.to([cursor, glow], { opacity: 1, duration: 0.2, overwrite: "auto" });
+        // Show cursor when it moves
+        if (!hasMoved) {
+          gsap.to([cursor, glow], { opacity: 1, duration: 0.2, overwrite: "auto" });
+          hasMoved = true;
+        }
         xToCursor(e.clientX);
         yToCursor(e.clientY);
         xToGlow(e.clientX);
@@ -39,10 +47,18 @@ const CustomCursor = () => {
 
       // Hide cursor when leaving the browser window completely
       const onMouseLeaveViewport = () => {
+        hasMoved = false;
         gsap.to([cursor, glow], { opacity: 0, duration: 0.2, overwrite: "auto" });
       };
 
-      const onMouseEnterViewport = () => {
+      const onMouseEnterViewport = (e: MouseEvent) => {
+        if (isTouch) return;
+        hasMoved = true;
+        
+        // Immediately set the position so it doesn't animate from the top left
+        gsap.set(cursor, { x: e.clientX, y: e.clientY });
+        gsap.set(glow, { x: e.clientX, y: e.clientY });
+        
         gsap.to([cursor, glow], { opacity: 1, duration: 0.2, overwrite: "auto" });
       };
 
