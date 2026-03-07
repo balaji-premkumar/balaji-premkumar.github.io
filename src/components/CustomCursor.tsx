@@ -1,9 +1,10 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
+import { MousePointer2 } from 'lucide-react';
 
 const CustomCursor = () => {
-  const dotRef = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<HTMLDivElement>(null);
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Disable custom cursor on touch devices
@@ -11,28 +12,28 @@ const CustomCursor = () => {
       return;
     }
 
-    const dot = dotRef.current;
-    const ring = ringRef.current;
+    const cursor = cursorRef.current;
+    const glow = glowRef.current;
 
-    if (!dot || !ring) return;
+    if (!cursor || !glow) return;
 
     const ctx = gsap.context(() => {
-      // Set initial state
-      gsap.set(dot, { xPercent: -50, yPercent: -50 });
-      gsap.set(ring, { xPercent: -50, yPercent: -50 });
+      // Set initial state - adjust x/y percent so the tip of the arrow is at the actual mouse position
+      gsap.set(cursor, { xPercent: -10, yPercent: -10 });
+      gsap.set(glow, { xPercent: -50, yPercent: -50 });
 
       // Create x/y quickSetters for performance
-      const xToDot = gsap.quickTo(dot, "x", { duration: 0, ease: "power3" });
-      const yToDot = gsap.quickTo(dot, "y", { duration: 0, ease: "power3" });
+      const xToCursor = gsap.quickTo(cursor, "x", { duration: 0, ease: "none" });
+      const yToCursor = gsap.quickTo(cursor, "y", { duration: 0, ease: "none" });
       
-      const xToRing = gsap.quickTo(ring, "x", { duration: 0.14, ease: "power2.out" });
-      const yToRing = gsap.quickTo(ring, "y", { duration: 0.14, ease: "power2.out" });
+      const xToGlow = gsap.quickTo(glow, "x", { duration: 0.15, ease: "power2.out" });
+      const yToGlow = gsap.quickTo(glow, "y", { duration: 0.15, ease: "power2.out" });
 
       const onMouseMove = (e: MouseEvent) => {
-        xToDot(e.clientX);
-        yToDot(e.clientY);
-        xToRing(e.clientX);
-        yToRing(e.clientY);
+        xToCursor(e.clientX);
+        yToCursor(e.clientY);
+        xToGlow(e.clientX);
+        yToGlow(e.clientY);
       };
 
       window.addEventListener("mousemove", onMouseMove);
@@ -41,13 +42,13 @@ const CustomCursor = () => {
       const interactiveElements = document.querySelectorAll('a, button, input, textarea, select');
       
       const onHover = () => {
-        gsap.to(dot, { scale: 2.8, duration: 0.3, ease: 'power2.out' });
-        gsap.to(ring, { scale: 0.5, opacity: 0, duration: 0.3, ease: 'power2.out' });
+        gsap.to(cursor, { scale: 1.2, duration: 0.3, ease: 'power2.out' });
+        gsap.to(glow, { scale: 1.5, opacity: 0.8, backgroundColor: 'rgba(200, 240, 96, 0.2)', duration: 0.3, ease: 'power2.out' });
       };
 
       const onLeave = () => {
-        gsap.to(dot, { scale: 1, duration: 0.3, ease: 'power2.out' });
-        gsap.to(ring, { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out' });
+        gsap.to(cursor, { scale: 1, duration: 0.3, ease: 'power2.out' });
+        gsap.to(glow, { scale: 1, opacity: 0.4, backgroundColor: 'rgba(255, 255, 255, 0.1)', duration: 0.3, ease: 'power2.out' });
       };
 
       interactiveElements.forEach((el) => {
@@ -75,13 +76,15 @@ const CustomCursor = () => {
   return (
     <>
       <div 
-        ref={dotRef} 
-        className="fixed top-0 left-0 w-2 h-2 bg-ink rounded-full pointer-events-none z-[10000] mix-blend-exclusion"
+        ref={glowRef} 
+        className="fixed top-0 left-0 w-12 h-12 rounded-full pointer-events-none z-[9998] blur-xl opacity-40 bg-white/10"
       />
       <div 
-        ref={ringRef} 
-        className="fixed top-0 left-0 w-8 h-8 border border-white/20 rounded-full pointer-events-none z-[9999]"
-      />
+        ref={cursorRef} 
+        className="fixed top-0 left-0 pointer-events-none z-[9999] text-accent drop-shadow-[0_0_8px_rgba(200,240,96,0.6)]"
+      >
+        <MousePointer2 size={24} strokeWidth={2.5} className="fill-bg" />
+      </div>
     </>
   );
 };
