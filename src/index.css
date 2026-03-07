@@ -19,6 +19,7 @@
   color-scheme: dark;
   color: var(--color-ink);
   background-color: var(--color-bg);
+  overflow-x: hidden;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -31,6 +32,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  overflow-x: hidden;
   cursor: none;
   font-family: var(--font-mono);
   background-color: var(--color-bg);
