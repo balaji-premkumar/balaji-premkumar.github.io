@@ -2,7 +2,7 @@ import { useLayoutEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { TextPlugin } from 'gsap/TextPlugin';
-import { ChevronDown } from 'lucide-react';
+import { Mouse } from 'lucide-react';
 import { personalInfo } from '../constants';
 
 gsap.registerPlugin(TextPlugin);
@@ -74,7 +74,7 @@ const Hero = () => {
         </div>
 
         {/* Main Heading */}
-        <h1 className="font-display font-black leading-[1.1] tracking-tighter text-ink mb-6" style={{ fontSize: 'clamp(3.2rem, 8vw, 7rem)' }}>
+        <h1 className="font-sans font-black leading-[1.1] tracking-tighter text-ink mb-6" style={{ fontSize: 'clamp(3.2rem, 8vw, 7rem)' }}>
           <span className="block overflow-hidden pb-2">
             <span ref={nameLine1Ref} className="block">{personalInfo.name.first}</span>
           </span>
@@ -117,7 +117,7 @@ const Hero = () => {
         transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
       >
         <span className="font-mono text-xs uppercase tracking-widest">Scroll</span>
-        <ChevronDown size={20} />
+        <Mouse size={24} />
       </motion.div>
     </section>
   );
