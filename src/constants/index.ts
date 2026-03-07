@@ -45,6 +45,9 @@ export const personalInfo = {
     first: "Balaji",
     last: "Premkumar"
   },
+  contact: {
+    phone: "+91 8122708776", // Update this with your actual number
+  },
   roles: [
     "Senior Software Engineer",
     "Full Stack Developer",
