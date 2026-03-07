@@ -38,7 +38,7 @@ import { FaDatabase, FaCss3Alt, FaLinkedin, FaAws, FaJava, FaTerminal, FaWindows
 import { MdFactory } from 'react-icons/md';
 import { DiMsqlServer } from 'react-icons/di';
 import { VscAzure } from 'react-icons/vsc';
-import { color } from 'framer-motion';
+
 
 export const personalInfo = {
   name: {
