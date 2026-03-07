@@ -32,7 +32,8 @@ import {
   SiNginx,
   SiSelenium,
   SiElastic,
-  SiGooglegemini
+  SiGooglegemini,
+  SiClaude
 } from 'react-icons/si';
 import { FaDatabase, FaCss3Alt, FaLinkedin, FaAws, FaJava, FaTerminal, FaWindows, FaSignal } from 'react-icons/fa';
 import { MdFactory } from 'react-icons/md';
@@ -143,7 +144,8 @@ export const skillGroups = [
     label: 'AI & Automation',
     icons: [
       { name: 'Factory AI (custom droids)', Icon: MdFactory, color: '#f59e0b' },
-      { name: 'Gemini CLI', Icon: SiGooglegemini, color: '#1B6BFB' }
+      { name: 'Gemini CLI', Icon: SiGooglegemini, color: '#1B6BFB' },
+      { name: 'Claude Code', Icon: SiClaude, color: '#D97757'}
     ]
   }
 ];
