@@ -34,11 +34,15 @@ const CustomCursor = () => {
       let hasMoved = false;
 
       const onMouseMove = (e: MouseEvent) => {
+        if (isTouch) return;
+        
         // Show cursor when it moves
         if (!hasMoved) {
           gsap.to([cursor, glow], { opacity: 1, duration: 0.2, overwrite: "auto" });
           hasMoved = true;
         }
+        
+        // clientX/Y are relative to viewport, which matches our 'fixed' positioning
         xToCursor(e.clientX);
         yToCursor(e.clientY);
         xToGlow(e.clientX);
@@ -104,14 +108,16 @@ const CustomCursor = () => {
   }
 
   return (
-    <>
+    <div className="print:hidden">
       <div 
         ref={glowRef} 
         className="fixed top-0 left-0 w-14 h-14 rounded-full pointer-events-none z-[9998] blur-[20px] bg-white/10"
+        style={{ willChange: 'transform' }}
       />
       <div 
         ref={cursorRef} 
         className="fixed top-0 left-0 pointer-events-none z-[9999] drop-shadow-[0_0_12px_rgba(200,240,96,0.8)]"
+        style={{ willChange: 'transform' }}
       >
         <svg 
           width="34" 
@@ -136,7 +142,7 @@ const CustomCursor = () => {
           />
         </svg>
       </div>
-    </>
+    </div>
   );
 };
 
