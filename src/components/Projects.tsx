@@ -79,24 +79,28 @@ const Projects = () => {
                   </span>
                 </div>
                 <div className="flex gap-4">
-                  <a 
-                    href={project.link} 
-                    target="_blank" 
-                    rel="noreferrer"
-                    className="text-muted hover:text-accent transition-colors cursor-none"
-                    aria-label="View Source"
-                  >
-                    <Github size={24} />
-                  </a>
-                  <a 
-                    href={project.demo} 
-                    target="_blank" 
-                    rel="noreferrer"
-                    className="text-muted hover:text-accent transition-colors cursor-none"
-                    aria-label="Live Demo"
-                  >
-                    <ExternalLink size={24} />
-                  </a>
+                  {project.link && (
+                    <a 
+                      href={project.link} 
+                      target="_blank" 
+                      rel="noreferrer"
+                      className="text-muted hover:text-accent transition-colors cursor-none"
+                      aria-label="View Source"
+                    >
+                      <Github size={24} />
+                    </a>
+                  )}
+                  {project.demo && (
+                    <a 
+                      href={project.demo} 
+                      target="_blank" 
+                      rel="noreferrer"
+                      className="text-muted hover:text-accent transition-colors cursor-none"
+                      aria-label="Live Demo"
+                    >
+                      <ExternalLink size={24} />
+                    </a>
+                  )}
                 </div>
               </div>
 
