@@ -197,22 +197,46 @@ export const experiences = [
 
 export const projects = [
   {
-    name: "Enterprise .NET Core System",
-    description: "A comprehensive enterprise system featuring 20+ modules including user management, reporting, and high-security protocols.",
-    tech: ['dotnet', 'sqlserver', 'azure'],
-  },
-  {
     name: "CANSELL E-commerce",
     description: "A full-scale e-commerce platform with real-time order tracking, payment gateway integration, and a mobile-optimized frontend.",
     tech: ['react', 'nodejs', 'mongodb'],
-    demo: "https://github.com/",
+    demo: "https://cansell.in"
   },
   {
-    name: "Real-time Notification Hub",
-    description: "A highly scalable notification service providing real-time updates across multiple enterprise applications using SignalR.",
-    tech: ['cs', 'react', 'azure'],
-    link: "https://github.com/",
+    name: "SQL Notebook VSCode Extension",
+    description: "A VSCode extension for running SQL queries in a notebook format.",
+    tech: ['typescript'],
+    link: "https://github.com/balaji-premkumar/vscode-sql-notebook-extension",
+    demo: "https://marketplace.visualstudio.com/items?itemName=BalajiPremkumar.sql-notebook"
   },
+  {
+    name: "React Devicons",
+    description: "A React component library for rendering devicons.",
+    tech: ['react', 'typescript'],
+    link: "https://github.com/balaji-premkumar/react-devicons",
+    demo: "https://www.npmjs.com/package/react-devicons"
+  },
+  {
+    name: "Sri Murugan Fireworks",
+    description: "Online Crackers store which is custom built on laravel.",
+    tech: ['laravel', 'mysql', 'tailwindcss'],
+    demo: "https://srimuruganfireworks.in/"
+  },
+  {
+    name: "SignalR Chat & Negotiation",
+    description: "A real-time chat and negotiation system module to facilitate seamless communication between users.",
+    tech: ['dotnet', 'signalr'],
+  },
+  {
+    name: "Purchase Update System",
+    description: "A transaction-based purchase update system module ensuring reliable message delivery and processing.",
+    tech: ['dotnet', 'rabbitmq'],
+  },
+  {
+    name: "Mobile Notification API Service",
+    description: "A robust API service module designed to process and deliver mobile notifications efficiently.",
+    tech: ['dotnet', 'nodejs', 'firebase'],
+  }
 ];
 
 export const socialLinks = [
