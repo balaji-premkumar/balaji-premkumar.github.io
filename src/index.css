@@ -64,6 +64,10 @@ body::before {
 
 /* Print optimizations */
 @media print {
+  @page {
+    margin: 0.5cm;
+  }
+  
   :root {
     --color-bg: #ffffff;
     --color-surface: #f8f9fa;

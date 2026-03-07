@@ -50,7 +50,7 @@ export const personalInfo = {
   },
   roles: [
     "Senior Software Engineer",
-    "Full Stack Developer",
+    "Full Stack Engineer",
     ".NET Core Expert",
     "React Enthusiast",
     "Enterprise Solution Architect"
