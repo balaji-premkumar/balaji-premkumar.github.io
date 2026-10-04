@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', 'dist-ssr']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -18,6 +18,15 @@ export default defineConfig([
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
+    },
+  },
+  {
+    // react-three-fiber is imperative by design: three.js objects are created once (useMemo, may use
+    // Math.random for procedural geometry) and mutated every frame in useFrame, outside React's render.
+    files: ['src/three/**/*.{ts,tsx}'],
+    rules: {
+      'react-hooks/immutability': 'off',
+      'react-hooks/purity': 'off',
     },
   },
 ])

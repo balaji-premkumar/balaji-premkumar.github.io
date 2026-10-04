@@ -1,0 +1,300 @@
+{
+  "$schema": "./site.schema.json",
+  "meta": {
+    "title": "Balaji Premkumar — Senior Software Engineer",
+    "description": "Balaji Premkumar — Senior Software Engineer with 13+ years building enterprise systems with .NET, React and the cloud. Explore projects, skills and experience.",
+    "url": "https://balaji-premkumar.github.io/",
+    "ogImage": "/og.jpg",
+    "keywords": [".NET", "React", "Full Stack", "Software Engineer", "Portfolio"]
+  },
+  "theme": {
+    "bg": "#0a0a0f",
+    "surface": "#111118",
+    "card": "#16161f",
+    "ink": "#eeeef2",
+    "accent": "#c8f060",
+    "accent2": "#60c8f0"
+  },
+  "effects": {
+    "webgl": true,
+    "particles": { "desktop": 2400, "mobile": 900 }
+  },
+  "person": {
+    "firstName": "Balaji",
+    "lastName": "Premkumar",
+    "jobTitle": "Senior Software Engineer",
+    "availability": "Available for work",
+    "location": "India",
+    "email": "balaji00710@gmail.com",
+    "phone": "+91 8122708776",
+    "roles": [
+      "Senior Software Engineer",
+      "Full Stack Engineer",
+      ".NET Core Expert",
+      "React Enthusiast",
+      "Enterprise Solution Architect"
+    ],
+    "socials": [
+      { "label": "GitHub", "href": "https://github.com/balaji-premkumar", "icon": "si:github/ffffff" },
+      { "label": "LinkedIn", "href": "https://linkedin.com/in/balaji--premkumar", "icon": "dev:linkedin-plain" },
+      { "label": "Email", "href": "mailto:balaji00710@gmail.com", "icon": "si:gmail" }
+    ]
+  },
+  "nav": {
+    "cta": { "label": "Hire Me", "href": "#contact" }
+  },
+  "sections": [
+    {
+      "type": "hero",
+      "id": "hero",
+      "primaryCta": { "label": "View Work", "href": "#projects" },
+      "secondaryCta": { "label": "Download CV", "href": "/cv/?print=1" }
+    },
+    {
+      "type": "about",
+      "id": "about",
+      "navLabel": "About",
+      "eyebrow": "Who I am",
+      "title": "About Me",
+      "quote": "Bridging the gap between complex enterprise logic and seamless user experiences.",
+      "paragraphs": [
+        "I am a Senior Software Engineer specializing in architecting robust enterprise solutions. With deep expertise in .NET Core and React, I focus on building high-performance backend systems that power exceptional frontend interfaces.",
+        "My journey involves transforming challenging business requirements into scalable, secure, and maintainable architectures. I thrive in environments that demand both technical rigor and creative problem-solving."
+      ],
+      "stats": [
+        { "value": 13, "suffix": "+", "label": "Years Experience" },
+        { "value": 25, "suffix": "+", "label": "Projects Delivered" },
+        { "value": 40, "suffix": "+", "label": "Technologies" }
+      ]
+    },
+    {
+      "type": "experience",
+      "id": "experience",
+      "navLabel": "Experience",
+      "eyebrow": "13 years in the making",
+      "title": "Career Path",
+      "items": [
+        {
+          "role": "Web Developer",
+          "company": "Megasoft Computers",
+          "period": "2012 – 2017",
+          "points": [
+            "Developed custom web applications for clients using PHP and MySQL.",
+            "Maintained and enhanced existing client websites.",
+            "Collaborated with designers to create user-friendly interfaces.",
+            "Provided technical support and training to clients."
+          ],
+          "tech": ["PHP", "MySQL", "jQuery", "CodeIgniter"],
+          "art": "/art/era-2012-php.webp",
+          "color": "#60c8f0"
+        },
+        {
+          "role": "Full Stack Engineer",
+          "company": "Startvis Technologies",
+          "period": "2017 – 2022",
+          "points": [
+            "Full-stack development of the CANSELL platform.",
+            "Designed server architecture and optimized mobile app communication.",
+            "Implemented real-time features using SignalR and WebSockets.",
+            "Worked with Node.js, React.js, MongoDB, and AWS."
+          ],
+          "tech": ["Node.js", "React", "MongoDB", "SignalR", "AWS"],
+          "art": "/art/era-2017-node.webp",
+          "color": "#7ee0a8"
+        },
+        {
+          "role": "Senior Software Engineer",
+          "company": "Canarys Automation",
+          "period": "2022 – 2023",
+          "points": [
+            "Led development of enterprise-level .NET Core applications with 20+ modules.",
+            "Architected scalable backend systems using C#, SQL Server, and Azure.",
+            "Optimized system performance and implemented robust security features.",
+            "Developed responsive frontends with React.js and modern CSS frameworks."
+          ],
+          "tech": [".NET Core", "C#", "SQL Server", "Azure", "React"],
+          "art": "/art/era-2022-dotnet.webp",
+          "color": "#a8e86c"
+        },
+        {
+          "role": "Supervising Associate",
+          "company": "EY GDS India LLP",
+          "period": "2023 – Present",
+          "points": [
+            "Building full-stack applications using .NET 10 and React.",
+            "Implementing and maintaining backend services with message queues and MSSQL.",
+            "Setting up and managing CI/CD pipelines with Azure DevOps and GitHub Actions.",
+            "Leveraging AI tools for development automation to increase overall efficiency."
+          ],
+          "tech": [".NET 10", "React", "MSSQL", "Azure DevOps", "GitHub Actions", "AI"],
+          "art": "/art/era-2023-ai.webp",
+          "color": "#c8f060"
+        }
+      ]
+    },
+    {
+      "type": "skills",
+      "id": "skills",
+      "navLabel": "Skills",
+      "eyebrow": "Tools of the trade",
+      "title": "Technical Arsenal",
+      "groups": [
+        {
+          "label": "Languages",
+          "items": [
+            { "name": "C#", "icon": "dev:csharp-original" },
+            { "name": "TypeScript", "icon": "dev:typescript-original" },
+            { "name": "JavaScript", "icon": "dev:javascript-original" },
+            { "name": "Python", "icon": "dev:python-original" },
+            { "name": "SQL", "icon": "dev:azuresqldatabase-original" },
+            { "name": "Core Java", "icon": "dev:java-original" },
+            { "name": "Shell / Bash", "icon": "dev:bash-original" }
+          ]
+        },
+        {
+          "label": "Frontend",
+          "items": [
+            { "name": "React", "icon": "dev:react-original" },
+            { "name": "Next.js", "icon": "si:nextdotjs/ffffff" },
+            { "name": "AngularJS", "icon": "dev:angularjs-original" },
+            { "name": "WPF", "icon": "dev:windows11-original" },
+            { "name": "Android", "icon": "dev:android-original" },
+            { "name": "Flutter", "icon": "dev:flutter-original" },
+            { "name": "jQuery", "icon": "dev:jquery-original" },
+            { "name": "Lodash", "icon": "dev:lodash-original" },
+            { "name": "Tailwind CSS", "icon": "dev:tailwindcss-original" },
+            { "name": "Bootstrap", "icon": "dev:bootstrap-original" },
+            { "name": "HTML5", "icon": "dev:html5-original" },
+            { "name": "CSS3", "icon": "dev:css3-original" }
+          ]
+        },
+        {
+          "label": "Backend & Database",
+          "items": [
+            { "name": ".NET Core", "icon": "dev:dotnetcore-original" },
+            { "name": "Node.js", "icon": "dev:nodejs-original" },
+            { "name": "SignalR" },
+            { "name": "PHP", "icon": "dev:php-original" },
+            { "name": "Laravel", "icon": "dev:laravel-original" },
+            { "name": "CodeIgniter", "icon": "dev:codeigniter-plain" },
+            { "name": "MSSQL", "icon": "dev:microsoftsqlserver-original" },
+            { "name": "MySQL", "icon": "dev:mysql-original" },
+            { "name": "MongoDB", "icon": "dev:mongodb-original" },
+            { "name": "Redis", "icon": "dev:redis-original" },
+            { "name": "PostgreSQL", "icon": "dev:postgresql-original" },
+            { "name": "RabbitMQ", "icon": "dev:rabbitmq-original" }
+          ]
+        },
+        {
+          "label": "DevOps & Cloud",
+          "items": [
+            { "name": "AWS", "icon": "dev:amazonwebservices-plain-wordmark" },
+            { "name": "Azure", "icon": "dev:azure-original" },
+            { "name": "Docker", "icon": "dev:docker-original" },
+            { "name": "Git", "icon": "dev:git-original" },
+            { "name": "GitHub", "icon": "si:github/ffffff" },
+            { "name": "ELK", "icon": "dev:elasticsearch-original" },
+            { "name": "Nginx", "icon": "dev:nginx-original" },
+            { "name": "Selenium", "icon": "dev:selenium-original" },
+            { "name": "pfSense", "icon": "si:pfsense/ffffff" },
+            { "name": "VMware", "icon": "si:vmware/ffffff" }
+          ]
+        },
+        {
+          "label": "AI & Automation",
+          "items": [
+            { "name": "Factory AI (Custom Droids)" },
+            { "name": "Gemini CLI", "icon": "si:googlegemini" },
+            { "name": "Claude Code", "icon": "si:claude" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "projects",
+      "id": "projects",
+      "navLabel": "Projects",
+      "eyebrow": "Things I've shipped",
+      "title": "Selected Work",
+      "moreLink": { "label": "View full GitHub", "href": "https://github.com/balaji-premkumar" },
+      "items": [
+        {
+          "name": "CANSELL E-commerce",
+          "description": "A full-scale e-commerce platform with real-time order tracking, payment gateway integration, and a mobile-optimized frontend.",
+          "tech": ["React", "Node.js", "MongoDB"],
+          "image": "/projects/cansell.webp",
+          "featured": true,
+          "label": "Live Product",
+          "links": { "demo": "https://cansell.in" }
+        },
+        {
+          "name": "SQL Notebook — VS Code Extension",
+          "description": "A VS Code extension for running SQL queries in a notebook format.",
+          "tech": ["TypeScript", "VS Code API"],
+          "image": "/art/proj-sql-notebook.webp",
+          "featured": true,
+          "label": "Open Source",
+          "links": {
+            "demo": "https://marketplace.visualstudio.com/items?itemName=BalajiPremkumar.sql-notebook",
+            "source": "https://github.com/balaji-premkumar/vscode-sql-notebook-extension"
+          }
+        },
+        {
+          "name": "React Devicons",
+          "description": "A React component library for rendering devicons.",
+          "tech": ["React", "TypeScript"],
+          "image": "/art/proj-react-devicons.webp",
+          "label": "Open Source",
+          "links": {
+            "demo": "https://www.npmjs.com/package/react-devicons",
+            "source": "https://github.com/balaji-premkumar/react-devicons"
+          }
+        },
+        {
+          "name": "Sri Murugan Fireworks",
+          "description": "Online crackers store, custom built on Laravel.",
+          "tech": ["Laravel", "MySQL", "Tailwind CSS"],
+          "image": "/projects/sri-murugan-fireworks.webp",
+          "label": "Client · Live",
+          "links": { "demo": "https://srimuruganfireworks.in/" }
+        },
+        {
+          "name": "SignalR Chat & Negotiation",
+          "description": "A real-time chat and negotiation system module to facilitate seamless communication between users.",
+          "tech": [".NET", "SignalR"],
+          "image": "/art/proj-signalr.webp",
+          "label": "Client · Private"
+        },
+        {
+          "name": "Purchase Update System",
+          "description": "A transaction-based purchase update system module ensuring reliable message delivery and processing.",
+          "tech": [".NET", "RabbitMQ"],
+          "image": "/art/proj-rabbitmq.webp",
+          "label": "Client · Private"
+        },
+        {
+          "name": "Mobile Notification API Service",
+          "description": "A robust API service module designed to process and deliver mobile notifications efficiently.",
+          "tech": [".NET", "Node.js", "Firebase"],
+          "image": "/art/proj-notify.webp",
+          "label": "Client · Private"
+        }
+      ]
+    },
+    {
+      "type": "contact",
+      "id": "contact",
+      "navLabel": "Contact",
+      "eyebrow": "What's next",
+      "title": "Let's Talk",
+      "text": "Available for interesting enterprise projects and full-stack collaborations. Let's build something extraordinary together.",
+      "cta": { "label": "Say hello", "href": "mailto:balaji00710@gmail.com" }
+    }
+  ],
+  "footer": {
+    "text": "Designed & built by Balaji Premkumar"
+  },
+  "cv": {
+    "accent": "#4d7c0f"
+  }
+}
