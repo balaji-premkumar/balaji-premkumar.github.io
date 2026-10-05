@@ -1,5 +1,6 @@
 import { useRef, useState, type CSSProperties } from 'react';
 import type { SectionOf } from '../../content';
+import { asset, srcSet } from '../../lib/assets';
 import { gsap, ScrollTrigger, useGSAP } from '../../lib/gsap';
 import { SectionHeader } from '../ui/SectionHeader';
 
@@ -52,7 +53,9 @@ export function Experience({ section, index }: { section: SectionOf<'experience'
             item.art ? (
               <img
                 key={item.art}
-                src={item.art}
+                src={asset(item.art)}
+                srcSet={srcSet(item.art)}
+                sizes="100vw"
                 alt=""
                 loading="lazy"
                 decoding="async"

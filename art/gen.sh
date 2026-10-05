@@ -12,7 +12,7 @@ for name in "${!P[@]}"; do
   agy -p "Use your image generation tool (Nano Banana) to generate exactly ONE image. Do not write code. Image prompt: ${P[$name]}, $STYLE." \
     --mode accept-edits --model gemini-3.8-flash-medium --print-timeout 280s >/dev/null 2>&1
   for i in $(seq 1 60); do
-    f=$(find ~/.gemini/antigravity-cli/brain -newer "$marker" -type f \( -name '*.jpg' -o -name '*.png' \) 2>/dev/null | head -1)
+    f=$(find ~/.gemini/antigravity-cli/brain -newer "$marker" -type f \( -name '*.jpg' -o -name '*.png' \) -not -path '*/.tempmediaStorage/*' 2>/dev/null | head -1)
     [ -n "$f" ] && break; sleep 5
   done
   rm -f "$marker"

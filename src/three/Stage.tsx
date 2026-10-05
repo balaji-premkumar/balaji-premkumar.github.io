@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useState } from 'react';
+import { Suspense, useEffect, useMemo, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { sections, site } from '../content';
 import { measure, scroll } from './scroll';
+import { Avatar } from './scenes/Avatar';
 import { Core } from './scenes/Core';
 import { Particles } from './scenes/Particles';
 import { SkillGalaxy } from './scenes/SkillGalaxy';
@@ -16,6 +17,22 @@ const skills = sections.find((s) => s.type === 'skills');
 const timelineColors = experience?.items.map((i) => i.color ?? site.theme.accent) ?? [];
 const galaxyGroups =
   skills?.groups.map((g) => ({ label: g.label, icons: g.items.flatMap((i) => (i.icon ? [i.icon] : [])) })) ?? [];
+
+const avatar = site.avatar?.enabled ? site.avatar : undefined;
+const CAMERA_Z = 6;
+// On desktop the hero core becomes a halo behind the figure's head. It sits deeper than the figure, so scale
+// x/y by the depth ratio to keep it visually behind the head from the camera's point of view.
+const heroPose = avatar?.poses.hero;
+function haloFor([x, y, z]: [number, number, number], scale: number) {
+  const haloZ = z - 1.8 * scale;
+  const k = (CAMERA_Z - haloZ) / (CAMERA_Z - z);
+  return { pos: [x * k, (y + avatar!.height * scale * 0.66) * k, haloZ] as [number, number, number], scale: 0.85 * scale };
+}
+export type HaloAnchor = { desktop: ReturnType<typeof haloFor>; mobile: ReturnType<typeof haloFor> };
+const heroAnchor: HaloAnchor | undefined = heroPose && {
+  desktop: haloFor(heroPose.pos, heroPose.scale),
+  mobile: haloFor(heroPose.mobile ?? heroPose.pos, heroPose.mobileScale ?? heroPose.scale),
+};
 
 /** Coarse device tier — fewer particles, lower geometry detail and DPR on phones / low-core machines. */
 function quality() {
@@ -62,13 +79,18 @@ export default function Stage() {
     <Canvas
       className={`transition-opacity duration-1000 ${ready ? 'opacity-100' : 'opacity-0'}`}
       dpr={q.dpr}
-      camera={{ position: [0, 0, 6], fov: 50, near: 0.1, far: 60 }}
+      camera={{ position: [0, 0, CAMERA_Z], fov: 50, near: 0.1, far: 60 }}
       gl={{ antialias: false, alpha: true, powerPreference: 'high-performance' }}
       onCreated={() => setReady(true)}
     >
       <Rig />
       <Particles palette={palette} count={q.particles} />
-      <Core palette={palette} detail={q.detail} />
+      <Core palette={palette} detail={q.detail} heroAnchor={heroAnchor} />
+      {avatar && (
+        <Suspense fallback={null}>
+          <Avatar config={avatar} palette={palette} />
+        </Suspense>
+      )}
       {timelineColors.length > 0 && <Timeline colors={timelineColors} palette={palette} />}
       {galaxyGroups.length > 0 && <SkillGalaxy groups={galaxyGroups} />}
     </Canvas>

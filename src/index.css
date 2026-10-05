@@ -81,3 +81,37 @@ body::after {
   -webkit-text-stroke: 1px color-mix(in oklab, var(--ink) 35%, transparent);
   color: transparent;
 }
+
+/* Static avatar image for visitors without 3D; hidden once the 3D figure has loaded. */
+.avatar-poster {
+  transition: opacity 0.6s;
+}
+html[data-avatar3d] .avatar-poster {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Card deal (desktop + 3D): cards wait hidden until their thrown 3D card lands; focus always reveals. */
+html[data-deal] [data-deal-index]:not([data-dealt]):not(:focus-within) {
+  opacity: 0;
+}
+
+/* Projects (desktop): the card nearest the centre is the highlight, the rest step back. Uses the individual `scale`
+   property (not `transform`) so it never fights GSAP's flip-in, which animates `transform`. */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .project-card {
+    /* Solid enough that the 3D scene behind (incl. the figure) never shows through the text. */
+    background-color: color-mix(in oklab, var(--card) 94%, transparent);
+    transition: scale 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.5s, box-shadow 0.5s, border-color 0.3s;
+  }
+  /* Dim with brightness, not opacity — cards stay opaque. */
+  ul:has(> [data-active]) > .project-card:not([data-active]) {
+    scale: 0.93;
+    filter: brightness(0.55) saturate(0.75);
+  }
+  .project-card[data-active] {
+    scale: 1.04;
+    border-color: color-mix(in oklab, var(--accent) 55%, transparent);
+    box-shadow: 0 0 70px -12px color-mix(in oklab, var(--accent) 45%, transparent);
+  }
+}

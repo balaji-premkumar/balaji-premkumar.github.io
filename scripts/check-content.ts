@@ -44,6 +44,7 @@ for (const l of links) {
 
 // Collect every asset reference.
 const assets: string[] = [site.meta.ogImage, ...site.person.socials.map((s) => s.icon)];
+if (site.avatar) assets.push(site.avatar.model, ...(site.avatar.poster ? [site.avatar.poster] : []));
 for (const s of site.sections) {
   // Only file links (e.g. a PDF) are assets; page links like /cv/ are not.
   if (s.type === 'hero' && s.secondaryCta && /\.\w+$/.test(s.secondaryCta.href)) assets.push(s.secondaryCta.href);
@@ -55,10 +56,14 @@ for (const s of site.sections) {
 const remote: string[] = [];
 for (const ref of assets) {
   const url = iconUrl(ref);
-  if (url.startsWith('/')) {
-    // Missing local files are warnings: the UI degrades gracefully, but you should know.
+  if (url.startsWith('http')) remote.push(url);
+  else if (url.startsWith('/')) {
+    // "/x" → public/x (served as-is). Missing → warning: the UI degrades gracefully, but you should know.
     if (!existsSync(join(root, 'public', url))) warnings.push(`Missing file public${url}`);
-  } else if (url.startsWith('http')) remote.push(url);
+  } else if (!existsSync(join(root, 'src/assets', url))) {
+    // "x/y.webp" → bundled from src/assets; a missing one would break the build, so it's an error.
+    errors.push(`Missing bundled asset src/assets/${url}`);
+  }
 }
 
 if (process.argv.includes('--remote')) {

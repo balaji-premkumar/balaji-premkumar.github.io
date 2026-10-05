@@ -1,3 +1,4 @@
+import { asset } from '../../lib/assets';
 import { iconUrl, initials } from '../../lib/icons';
 
 type Props = {
@@ -15,5 +16,5 @@ export function Icon({ name, icon, className = 'size-6' }: Props) {
       </span>
     );
   }
-  return <img src={iconUrl(icon)} alt="" aria-hidden loading="lazy" decoding="async" className={`${className} object-contain`} />;
+  return <img src={asset(iconUrl(icon))} alt="" aria-hidden loading="lazy" decoding="async" className={`${className} object-contain`} />;
 }

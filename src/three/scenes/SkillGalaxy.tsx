@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { asset } from '../../lib/assets';
 import { iconUrl } from '../../lib/icons';
 import { sceneOf } from '../scroll';
 
@@ -32,7 +33,7 @@ export function SkillGalaxy({ groups }: { groups: Group[] }) {
 
   useEffect(() => {
     let alive = true;
-    Promise.all(groups.map((g) => Promise.all(g.icons.map((i) => loadIcon(iconUrl(i)))))).then((t) => alive && setTextures(t));
+    Promise.all(groups.map((g) => Promise.all(g.icons.map((i) => loadIcon(asset(iconUrl(i))))))).then((t) => alive && setTextures(t));
     return () => {
       alive = false;
     };

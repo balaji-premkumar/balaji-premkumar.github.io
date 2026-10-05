@@ -2,6 +2,7 @@ import { resolve } from 'node:path';
 import { defineConfig, type HtmlTagDescriptor, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
+import { imagetools } from 'vite-imagetools';
 import site from './src/content/site.json';
 
 /** Injects <title>, SEO/social meta, JSON-LD and theme colours from site.json into each HTML page. */
@@ -72,7 +73,7 @@ function siteHead(): Plugin {
 }
 
 export default defineConfig({
-  plugins: [react(), tailwindcss(), siteHead()],
+  plugins: [react(), tailwindcss(), imagetools(), siteHead()],
   // three.js is ~250 KB gz and lives in its own lazy chunk (loaded after idle), so the default warning is noise.
   build: {
     chunkSizeWarningLimit: 1000,

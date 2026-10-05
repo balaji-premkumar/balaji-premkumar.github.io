@@ -105,6 +105,182 @@
         "particles"
       ]
     },
+    "avatar": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "model": {
+          "type": "string",
+          "description": "GLB under src/assets, e.g. \"models/me.glb\" (built by `bun run models`)"
+        },
+        "poster": {
+          "description": "Static image shown when 3D is off (no WebGL / reduced motion)",
+          "type": "string"
+        },
+        "alt": {
+          "type": "string",
+          "description": "Accessible description of the figure"
+        },
+        "height": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "World-space height in the 3D scene at scale 1"
+        },
+        "followPointer": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 60,
+          "description": "Max degrees the figure turns toward the cursor"
+        },
+        "clips": {
+          "description": "Animation clip names inside the GLB (Mixamo actions)",
+          "type": "object",
+          "properties": {
+            "idle": {
+              "type": "string"
+            },
+            "greet": {
+              "description": "Played when the hero comes into view",
+              "type": "string"
+            },
+            "throw": {
+              "description": "Played for each dealt card",
+              "type": "string"
+            },
+            "cheer": {
+              "description": "Played when the contact section comes into view",
+              "type": "string"
+            }
+          },
+          "required": [
+            "idle"
+          ]
+        },
+        "handBone": {
+          "description": "Bone the dealt card sits in, e.g. \"mixamorig:RightHand\"",
+          "type": "string"
+        },
+        "deal": {
+          "description": "Desktop only: the figure throws each card onto its slot as it scrolls into view",
+          "type": "object",
+          "properties": {
+            "section": {
+              "type": "string",
+              "description": "Section type whose cards get dealt, e.g. \"projects\""
+            },
+            "releaseAt": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Point in the throw clip where the card leaves the hand (0–1)"
+            },
+            "flight": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "Seconds from release to landing"
+            },
+            "arc": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Height of the flight curve above its ends, as a fraction of the viewport height"
+            },
+            "spins": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Full turns the card makes in flight"
+            },
+            "speed": {
+              "default": 1,
+              "description": "Throw animation speed multiplier (1 = Mixamo timing)",
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          },
+          "required": [
+            "section",
+            "releaseAt",
+            "flight",
+            "arc",
+            "spins"
+          ]
+        },
+        "poses": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "description": "Section type: hero | about | experience | skills | projects | contact"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "pos": {
+                "type": "array",
+                "prefixItems": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "items": false,
+                "minItems": 3,
+                "maxItems": 3,
+                "description": "x, y, z — y is the feet"
+              },
+              "mobile": {
+                "type": "array",
+                "prefixItems": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "items": false,
+                "minItems": 3,
+                "maxItems": 3
+              },
+              "scale": {
+                "type": "number",
+                "minimum": 0
+              },
+              "mobileScale": {
+                "type": "number",
+                "minimum": 0
+              },
+              "turn": {
+                "description": "Base rotation in degrees (negative = turned toward the left)",
+                "type": "number"
+              }
+            },
+            "required": [
+              "pos",
+              "scale"
+            ]
+          },
+          "description": "Where the figure stands while each section is on screen; sections not listed hide it"
+        }
+      },
+      "required": [
+        "enabled",
+        "model",
+        "alt",
+        "height",
+        "followPointer",
+        "poses"
+      ]
+    },
     "person": {
       "type": "object",
       "properties": {
@@ -154,7 +330,7 @@
               },
               "icon": {
                 "type": "string",
-                "description": "dev:<devicon-file> | si:<simple-icon>[/hex] | /local/path | https://url"
+                "description": "dev:<devicon-file> | si:<simple-icon>[/hex] | assets/relative/path | /public/path | https://url"
               }
             },
             "required": [
@@ -389,7 +565,7 @@
                       }
                     },
                     "art": {
-                      "description": "Backdrop image shown behind this career stop",
+                      "description": "Backdrop image shown behind this career stop (path under src/assets, e.g. \"art/x.webp\")",
                       "type": "string"
                     },
                     "color": {
@@ -460,7 +636,7 @@
                           },
                           "icon": {
                             "type": "string",
-                            "description": "dev:<devicon-file> | si:<simple-icon>[/hex] | /local/path | https://url"
+                            "description": "dev:<devicon-file> | si:<simple-icon>[/hex] | assets/relative/path | /public/path | https://url"
                           }
                         },
                         "required": [
@@ -543,6 +719,7 @@
                       }
                     },
                     "image": {
+                      "description": "Card image (path under src/assets, e.g. \"projects/x.webp\")",
                       "type": "string"
                     },
                     "featured": {

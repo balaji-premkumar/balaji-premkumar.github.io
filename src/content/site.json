@@ -19,6 +19,22 @@
     "webgl": true,
     "particles": { "desktop": 2400, "mobile": 900 }
   },
+  "avatar": {
+    "enabled": true,
+    "model": "models/me.glb",
+    "poster": "models/me-poster.webp",
+    "alt": "Clay figurine of Balaji in a white shirt and dark trousers",
+    "height": 2.6,
+    "followPointer": 28,
+    "clips": { "idle": "idle", "greet": "wave", "throw": "throw", "cheer": "thumbs-up" },
+    "handBone": "mixamorig:RightHand",
+    "deal": { "section": "projects", "releaseAt": 0.5, "flight": 0.7, "arc": 0.22, "spins": 1, "speed": 1.4 },
+    "poses": {
+      "hero": { "pos": [2.8, -1.25, 0.2], "mobile": [0, -2.55, 0], "scale": 0.88, "mobileScale": 0.6, "turn": -14 },
+      "projects": { "pos": [-3.25, -2.45, 0.6], "scale": 0.74, "mobileScale": 0, "turn": 38 },
+      "contact": { "pos": [3.9, -2.2, -0.6], "scale": 0.7, "mobileScale": 0, "turn": -32 }
+    }
+  },
   "person": {
     "firstName": "Balaji",
     "lastName": "Premkumar",
@@ -85,7 +101,7 @@
             "Provided technical support and training to clients."
           ],
           "tech": ["PHP", "MySQL", "jQuery", "CodeIgniter"],
-          "art": "/art/era-2012-php.webp",
+          "art": "art/era-2012-php.webp",
           "color": "#60c8f0"
         },
         {
@@ -99,7 +115,7 @@
             "Worked with Node.js, React.js, MongoDB, and AWS."
           ],
           "tech": ["Node.js", "React", "MongoDB", "SignalR", "AWS"],
-          "art": "/art/era-2017-node.webp",
+          "art": "art/era-2017-node.webp",
           "color": "#7ee0a8"
         },
         {
@@ -113,7 +129,7 @@
             "Developed responsive frontends with React.js and modern CSS frameworks."
           ],
           "tech": [".NET Core", "C#", "SQL Server", "Azure", "React"],
-          "art": "/art/era-2022-dotnet.webp",
+          "art": "art/era-2022-dotnet.webp",
           "color": "#a8e86c"
         },
         {
@@ -127,7 +143,7 @@
             "Leveraging AI tools for development automation to increase overall efficiency."
           ],
           "tech": [".NET 10", "React", "MSSQL", "Azure DevOps", "GitHub Actions", "AI"],
-          "art": "/art/era-2023-ai.webp",
+          "art": "art/era-2023-ai.webp",
           "color": "#c8f060"
         }
       ]
@@ -222,7 +238,7 @@
           "name": "CANSELL E-commerce",
           "description": "A full-scale e-commerce platform with real-time order tracking, payment gateway integration, and a mobile-optimized frontend.",
           "tech": ["React", "Node.js", "MongoDB"],
-          "image": "/projects/cansell.webp",
+          "image": "projects/cansell.webp",
           "featured": true,
           "label": "Live Product",
           "links": { "demo": "https://cansell.in" }
@@ -231,7 +247,7 @@
           "name": "SQL Notebook — VS Code Extension",
           "description": "A VS Code extension for running SQL queries in a notebook format.",
           "tech": ["TypeScript", "VS Code API"],
-          "image": "/art/proj-sql-notebook.webp",
+          "image": "art/proj-sql-notebook.webp",
           "featured": true,
           "label": "Open Source",
           "links": {
@@ -243,7 +259,7 @@
           "name": "React Devicons",
           "description": "A React component library for rendering devicons.",
           "tech": ["React", "TypeScript"],
-          "image": "/art/proj-react-devicons.webp",
+          "image": "art/proj-react-devicons.webp",
           "label": "Open Source",
           "links": {
             "demo": "https://www.npmjs.com/package/react-devicons",
@@ -254,7 +270,7 @@
           "name": "Sri Murugan Fireworks",
           "description": "Online crackers store, custom built on Laravel.",
           "tech": ["Laravel", "MySQL", "Tailwind CSS"],
-          "image": "/projects/sri-murugan-fireworks.webp",
+          "image": "projects/sri-murugan-fireworks.webp",
           "label": "Client · Live",
           "links": { "demo": "https://srimuruganfireworks.in/" }
         },
@@ -262,21 +278,21 @@
           "name": "SignalR Chat & Negotiation",
           "description": "A real-time chat and negotiation system module to facilitate seamless communication between users.",
           "tech": [".NET", "SignalR"],
-          "image": "/art/proj-signalr.webp",
+          "image": "art/proj-signalr.webp",
           "label": "Client · Private"
         },
         {
           "name": "Purchase Update System",
           "description": "A transaction-based purchase update system module ensuring reliable message delivery and processing.",
           "tech": [".NET", "RabbitMQ"],
-          "image": "/art/proj-rabbitmq.webp",
+          "image": "art/proj-rabbitmq.webp",
           "label": "Client · Private"
         },
         {
           "name": "Mobile Notification API Service",
           "description": "A robust API service module designed to process and deliver mobile notifications efficiently.",
           "tech": [".NET", "Node.js", "Firebase"],
-          "image": "/art/proj-notify.webp",
+          "image": "art/proj-notify.webp",
           "label": "Client · Private"
         }
       ]

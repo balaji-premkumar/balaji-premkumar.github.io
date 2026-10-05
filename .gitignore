@@ -27,3 +27,8 @@ dist-ssr
 art/*.jpg
 dist-ssr
 art/*.png
+art/blender/renders/
+art/me/
+art/blender/*.blend
+art/blender/*.blend1
+art/models/

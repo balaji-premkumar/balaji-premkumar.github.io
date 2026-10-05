@@ -1,12 +1,15 @@
 import { useRef } from 'react';
 import { ArrowDown } from 'lucide-react';
 import { site, type SectionOf } from '../../content';
+import { asset, srcSet } from '../../lib/assets';
 import { gsap, MOTION_OK, useGSAP } from '../../lib/gsap';
 
 export function Hero({ section }: { section: SectionOf<'hero'> }) {
   const root = useRef<HTMLElement>(null);
   const roleRef = useRef<HTMLSpanElement>(null);
-  const { person } = site;
+  const { person, avatar } = site;
+  // With the 3D figure on the right, desktop text aligns left and the name shrinks to leave room.
+  const withAvatar = !!avatar?.enabled && !!avatar.poses.hero;
   const { primaryCta, secondaryCta } = section;
 
   useGSAP(
@@ -37,8 +40,17 @@ export function Hero({ section }: { section: SectionOf<'hero'> }) {
   );
 
   return (
-    <section ref={root} id={section.id} data-scene="hero" className="relative flex min-h-svh items-center justify-center px-6 pt-20">
-      <div data-hero-content className="flex w-full max-w-5xl flex-col items-center text-center">
+    <section
+      ref={root}
+      id={section.id}
+      data-scene="hero"
+      // Mobile + figure: content sits high so the figure can stand below the buttons.
+      className={`relative flex min-h-svh justify-center px-6 ${withAvatar ? 'items-start pt-28 md:items-center md:pt-20' : 'items-center pt-20'}`}
+    >
+      <div
+        data-hero-content
+        className={`flex w-full flex-col items-center text-center ${withAvatar ? 'max-w-7xl lg:items-start lg:text-left' : 'max-w-5xl'}`}
+      >
         {person.availability && (
           <div className="mb-8 overflow-hidden">
             <p data-hero-in className="flex items-center gap-4 text-xs uppercase tracking-[0.3em] text-accent">
@@ -51,7 +63,9 @@ export function Hero({ section }: { section: SectionOf<'hero'> }) {
           </div>
         )}
 
-        <h1 className="font-display font-extrabold leading-[0.92] tracking-tighter" style={{ fontSize: 'clamp(2rem, 8.2vw, 8rem)' }}>
+        <h1
+          className={`font-display text-[clamp(2rem,8.2vw,8rem)] leading-[0.92] font-extrabold tracking-tighter ${withAvatar ? 'lg:text-[clamp(3rem,6.2vw,7rem)]' : ''}`}
+        >
           <span className="block overflow-hidden pb-[0.06em]">
             <span data-hero-in className="block">{person.firstName}</span>
           </span>
@@ -69,6 +83,7 @@ export function Hero({ section }: { section: SectionOf<'hero'> }) {
 
         <div className="mt-12 w-full overflow-hidden p-2 sm:w-auto">
           <div data-hero-in className="flex flex-col items-center gap-4 sm:flex-row sm:gap-6">
+
           <a href={primaryCta.href} className="w-full rounded-full bg-accent px-8 py-4 text-center font-medium text-bg transition-transform hover:scale-[1.04] active:scale-95 sm:w-auto">
             {primaryCta.label}
           </a>
@@ -85,7 +100,21 @@ export function Hero({ section }: { section: SectionOf<'hero'> }) {
         </div>
       </div>
 
-      <a href={`#${site.sections.find((s) => s.type !== 'hero' && !s.hidden)?.id ?? ''}`} className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-xs uppercase tracking-[0.3em] text-muted hover:text-ink">
+      {withAvatar && avatar.poster && (
+        <img
+          src={asset(avatar.poster)}
+          srcSet={srcSet(avatar.poster)}
+          sizes="40vw"
+          alt={avatar.alt}
+          width={800}
+          height={1100}
+          loading="lazy" // hidden below lg → never fetched on phones
+          decoding="async"
+          className="avatar-poster pointer-events-none absolute right-[5%] bottom-[4svh] hidden h-[78svh] w-auto lg:block"
+        />
+      )}
+
+      <a href={`#${site.sections.find((s) => s.type !== 'hero' && !s.hidden)?.id ?? ''}`} className={`absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-2 text-xs uppercase tracking-[0.3em] text-muted hover:text-ink ${withAvatar ? 'hidden md:flex' : 'flex'}`}>
         Scroll
         <ArrowDown size={16} className="animate-bounce" aria-hidden />
       </a>

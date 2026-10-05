@@ -3,10 +3,11 @@ import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { simplex3 } from '../noise.glsl';
 import { sceneOf } from '../scroll';
-import type { Palette } from '../Stage';
+import type { HaloAnchor, Palette } from '../Stage';
 
 /** Where the core sits for each section type; blended by how visible each section is. */
-const POSES: Record<string, { pos: [number, number, number]; mobile?: [number, number, number]; scale: number; amp: number }> = {
+type Pose = { pos: [number, number, number]; mobile?: [number, number, number]; scale: number; mobileScale?: number; amp: number };
+const POSES: Record<string, Pose> = {
   hero: { pos: [0, 0, 0], scale: 1, amp: 0.22 },
   about: { pos: [-2.7, -1.1, -1.5], mobile: [0, 2.2, -2], scale: 0.55, amp: 0.12 },
   contact: { pos: [0, 0, -2], scale: 1.75, amp: 0.25 },
@@ -40,7 +41,7 @@ const fragment = /* glsl */ `
   }
 `;
 
-export function Core({ palette, detail }: { palette: Palette; detail: number }) {
+export function Core({ palette, detail, heroAnchor }: { palette: Palette; detail: number; heroAnchor?: HaloAnchor }) {
   const group = useRef<THREE.Group>(null);
   const mobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
@@ -66,6 +67,22 @@ export function Core({ palette, detail }: { palette: Palette; detail: number }) 
   }, [palette]);
 
   const target = useMemo(() => ({ pos: new THREE.Vector3(), scale: 0, amp: 0.2 }), []);
+  const poses = useMemo(
+    (): Record<string, Pose> =>
+      heroAnchor
+        ? {
+            ...POSES,
+            hero: {
+              ...POSES.hero!,
+              pos: heroAnchor.desktop.pos,
+              scale: heroAnchor.desktop.scale,
+              mobile: heroAnchor.mobile.pos,
+              mobileScale: heroAnchor.mobile.scale,
+            },
+          }
+        : POSES,
+    [heroAnchor],
+  );
 
   useFrame(({ clock }, dt) => {
     const g = group.current;
@@ -76,14 +93,14 @@ export function Core({ palette, detail }: { palette: Palette; detail: number }) 
     target.pos.set(0, 0, 0);
     target.scale = 0;
     target.amp = 0;
-    for (const [type, pose] of Object.entries(POSES)) {
+    for (const [type, pose] of Object.entries(poses)) {
       const v = sceneOf(type).vis;
       if (!v) continue;
       const pos = mobile && pose.mobile ? pose.mobile : pose.pos;
       target.pos.x += pos[0] * v;
       target.pos.y += pos[1] * v;
       target.pos.z += pos[2] * v;
-      target.scale += pose.scale * v;
+      target.scale += (mobile ? (pose.mobileScale ?? pose.scale) : pose.scale) * v;
       target.amp += pose.amp * v;
       w += v;
     }
