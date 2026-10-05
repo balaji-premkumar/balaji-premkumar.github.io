@@ -4,27 +4,32 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "content:check": "bun scripts/check-content.ts",
+    "predev": "bun run content:check",
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "bun run content:check && tsc -b && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && bun scripts/prerender.ts",
+    "preview": "vite preview",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "models": "gltf-transform optimize art/models/me.raw.glb src/assets/models/me.glb --compress meshopt --texture-compress webp --texture-size 2048 --simplify false && ffmpeg -loglevel error -y -i art/models/me-poster.png -c:v libwebp -quality 80 -pix_fmt yuva420p src/assets/models/me-poster.webp"
   },
   "dependencies": {
+    "@gsap/react": "^2.1.2",
+    "@react-three/fiber": "^9.8.1",
     "@tailwindcss/vite": "^4.2.1",
-    "framer-motion": "^12.35.0",
     "gsap": "^3.14.2",
     "lucide-react": "^0.577.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "react-icons": "^5.6.0",
-    "react-router-dom": "^7.13.1",
-    "tailwindcss": "^4.2.1"
+    "tailwindcss": "^4.2.1",
+    "three": "^0.186.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
+    "@gltf-transform/cli": "^4.5.1",
     "@types/node": "^24.12.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@types/three": "^0.186.0",
     "@vitejs/plugin-react": "^5.1.4",
     "eslint": "^9.39.4",
     "eslint-plugin-react-hooks": "^7.0.1",
@@ -32,6 +37,8 @@
     "globals": "^16.5.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.56.1",
-    "vite": "^7.3.1"
+    "vite": "^7.3.1",
+    "vite-imagetools": "^12.0.1",
+    "zod": "^4.6.5"
   }
 }

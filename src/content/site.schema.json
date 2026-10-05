@@ -1,0 +1,863 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "ogImage": {
+          "type": "string",
+          "description": "1200×630 image used for link previews"
+        },
+        "keywords": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "title",
+        "description",
+        "url",
+        "ogImage"
+      ]
+    },
+    "theme": {
+      "type": "object",
+      "properties": {
+        "bg": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "surface": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "card": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "ink": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "accent": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "accent2": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        }
+      },
+      "required": [
+        "bg",
+        "surface",
+        "card",
+        "ink",
+        "accent",
+        "accent2"
+      ]
+    },
+    "effects": {
+      "type": "object",
+      "properties": {
+        "webgl": {
+          "type": "boolean",
+          "description": "false = no 3D, CSS-only visuals"
+        },
+        "particles": {
+          "type": "object",
+          "properties": {
+            "desktop": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "mobile": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "desktop",
+            "mobile"
+          ]
+        }
+      },
+      "required": [
+        "webgl",
+        "particles"
+      ]
+    },
+    "avatar": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "model": {
+          "type": "string",
+          "description": "GLB under src/assets, e.g. \"models/me.glb\" (built by `bun run models`)"
+        },
+        "poster": {
+          "description": "Static image shown when 3D is off (no WebGL / reduced motion)",
+          "type": "string"
+        },
+        "alt": {
+          "type": "string",
+          "description": "Accessible description of the figure"
+        },
+        "height": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "World-space height in the 3D scene at scale 1"
+        },
+        "followPointer": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 60,
+          "description": "Max degrees the figure turns toward the cursor"
+        },
+        "clips": {
+          "description": "Animation clip names inside the GLB (Mixamo actions)",
+          "type": "object",
+          "properties": {
+            "idle": {
+              "type": "string"
+            },
+            "greet": {
+              "description": "Played when the hero comes into view",
+              "type": "string"
+            },
+            "throw": {
+              "description": "Played for each dealt card",
+              "type": "string"
+            },
+            "cheer": {
+              "description": "Played when the contact section comes into view",
+              "type": "string"
+            }
+          },
+          "required": [
+            "idle"
+          ]
+        },
+        "handBone": {
+          "description": "Bone the dealt card sits in, e.g. \"mixamorig:RightHand\"",
+          "type": "string"
+        },
+        "deal": {
+          "description": "Desktop only: the figure throws each card onto its slot as it scrolls into view",
+          "type": "object",
+          "properties": {
+            "section": {
+              "type": "string",
+              "description": "Section type whose cards get dealt, e.g. \"projects\""
+            },
+            "releaseAt": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Point in the throw clip where the card leaves the hand (0–1)"
+            },
+            "flight": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "Seconds from release to landing"
+            },
+            "arc": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Height of the flight curve above its ends, as a fraction of the viewport height"
+            },
+            "spins": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Full turns the card makes in flight"
+            },
+            "speed": {
+              "default": 1,
+              "description": "Throw animation speed multiplier (1 = Mixamo timing)",
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          },
+          "required": [
+            "section",
+            "releaseAt",
+            "flight",
+            "arc",
+            "spins"
+          ]
+        },
+        "poses": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "description": "Section type: hero | about | experience | skills | projects | contact"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "pos": {
+                "type": "array",
+                "prefixItems": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "items": false,
+                "minItems": 3,
+                "maxItems": 3,
+                "description": "x, y, z — y is the feet"
+              },
+              "mobile": {
+                "type": "array",
+                "prefixItems": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "items": false,
+                "minItems": 3,
+                "maxItems": 3
+              },
+              "scale": {
+                "type": "number",
+                "minimum": 0
+              },
+              "mobileScale": {
+                "type": "number",
+                "minimum": 0
+              },
+              "turn": {
+                "description": "Base rotation in degrees (negative = turned toward the left)",
+                "type": "number"
+              }
+            },
+            "required": [
+              "pos",
+              "scale"
+            ]
+          },
+          "description": "Where the figure stands while each section is on screen; sections not listed hide it"
+        }
+      },
+      "required": [
+        "enabled",
+        "model",
+        "alt",
+        "height",
+        "followPointer",
+        "poses"
+      ]
+    },
+    "person": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "jobTitle": {
+          "type": "string"
+        },
+        "availability": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+        },
+        "phone": {
+          "description": "Shown in the Contact section and on the CV; remove to hide everywhere",
+          "type": "string",
+          "pattern": "^\\+?[0-9][0-9 ()-]{6,19}$"
+        },
+        "roles": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Rotating lines under the name in the hero"
+        },
+        "socials": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "href": {
+                "type": "string"
+              },
+              "icon": {
+                "type": "string",
+                "description": "dev:<devicon-file> | si:<simple-icon>[/hex] | assets/relative/path | /public/path | https://url"
+              }
+            },
+            "required": [
+              "label",
+              "href",
+              "icon"
+            ]
+          }
+        }
+      },
+      "required": [
+        "firstName",
+        "lastName",
+        "jobTitle",
+        "email",
+        "roles",
+        "socials"
+      ]
+    },
+    "nav": {
+      "type": "object",
+      "properties": {
+        "cta": {
+          "type": "object",
+          "properties": {
+            "label": {
+              "type": "string"
+            },
+            "href": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "label",
+            "href"
+          ]
+        }
+      }
+    },
+    "sections": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "hero"
+              },
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$",
+                "description": "Anchor id, used in the URL hash (#id)"
+              },
+              "navLabel": {
+                "description": "Shown in the navbar when set",
+                "type": "string"
+              },
+              "hidden": {
+                "description": "Set true to remove the section without deleting its content",
+                "type": "boolean"
+              },
+              "eyebrow": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "primaryCta": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "href": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "label",
+                  "href"
+                ]
+              },
+              "secondaryCta": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "href": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "label",
+                  "href"
+                ]
+              }
+            },
+            "required": [
+              "type",
+              "id",
+              "primaryCta"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "about"
+              },
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$",
+                "description": "Anchor id, used in the URL hash (#id)"
+              },
+              "navLabel": {
+                "description": "Shown in the navbar when set",
+                "type": "string"
+              },
+              "hidden": {
+                "description": "Set true to remove the section without deleting its content",
+                "type": "boolean"
+              },
+              "eyebrow": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "quote": {
+                "type": "string"
+              },
+              "paragraphs": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "stats": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "suffix": {
+                      "type": "string"
+                    },
+                    "label": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "label"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "type",
+              "id",
+              "title",
+              "quote",
+              "paragraphs",
+              "stats"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "experience"
+              },
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$",
+                "description": "Anchor id, used in the URL hash (#id)"
+              },
+              "navLabel": {
+                "description": "Shown in the navbar when set",
+                "type": "string"
+              },
+              "hidden": {
+                "description": "Set true to remove the section without deleting its content",
+                "type": "boolean"
+              },
+              "eyebrow": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "items": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "role": {
+                      "type": "string"
+                    },
+                    "company": {
+                      "type": "string"
+                    },
+                    "period": {
+                      "type": "string"
+                    },
+                    "location": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "minItems": 1,
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "tech": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "art": {
+                      "description": "Backdrop image shown behind this career stop (path under src/assets, e.g. \"art/x.webp\")",
+                      "type": "string"
+                    },
+                    "color": {
+                      "description": "Glow colour of this stop in the 3D timeline",
+                      "type": "string",
+                      "pattern": "^#[0-9a-fA-F]{6}$"
+                    }
+                  },
+                  "required": [
+                    "role",
+                    "company",
+                    "period",
+                    "points"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "type",
+              "id",
+              "title",
+              "items"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "skills"
+              },
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$",
+                "description": "Anchor id, used in the URL hash (#id)"
+              },
+              "navLabel": {
+                "description": "Shown in the navbar when set",
+                "type": "string"
+              },
+              "hidden": {
+                "description": "Set true to remove the section without deleting its content",
+                "type": "boolean"
+              },
+              "eyebrow": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "groups": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "label": {
+                      "type": "string"
+                    },
+                    "items": {
+                      "minItems": 1,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "icon": {
+                            "type": "string",
+                            "description": "dev:<devicon-file> | si:<simple-icon>[/hex] | assets/relative/path | /public/path | https://url"
+                          }
+                        },
+                        "required": [
+                          "name"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "items"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "type",
+              "id",
+              "title",
+              "groups"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "projects"
+              },
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$",
+                "description": "Anchor id, used in the URL hash (#id)"
+              },
+              "navLabel": {
+                "description": "Shown in the navbar when set",
+                "type": "string"
+              },
+              "hidden": {
+                "description": "Set true to remove the section without deleting its content",
+                "type": "boolean"
+              },
+              "eyebrow": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "moreLink": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "href": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "label",
+                  "href"
+                ]
+              },
+              "items": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "tech": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "image": {
+                      "description": "Card image (path under src/assets, e.g. \"projects/x.webp\")",
+                      "type": "string"
+                    },
+                    "featured": {
+                      "type": "boolean"
+                    },
+                    "label": {
+                      "description": "Small tag, e.g. \"Open Source\" or \"Client · Private\"",
+                      "type": "string"
+                    },
+                    "links": {
+                      "type": "object",
+                      "properties": {
+                        "demo": {
+                          "type": "string",
+                          "format": "uri"
+                        },
+                        "source": {
+                          "type": "string",
+                          "format": "uri"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "description",
+                    "tech"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "type",
+              "id",
+              "title",
+              "items"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "contact"
+              },
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$",
+                "description": "Anchor id, used in the URL hash (#id)"
+              },
+              "navLabel": {
+                "description": "Shown in the navbar when set",
+                "type": "string"
+              },
+              "hidden": {
+                "description": "Set true to remove the section without deleting its content",
+                "type": "boolean"
+              },
+              "eyebrow": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              },
+              "cta": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "href": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "label",
+                  "href"
+                ]
+              }
+            },
+            "required": [
+              "type",
+              "id",
+              "title",
+              "text"
+            ]
+          }
+        ]
+      },
+      "description": "Rendered top to bottom in this order"
+    },
+    "footer": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "text"
+      ]
+    },
+    "cv": {
+      "type": "object",
+      "properties": {
+        "accent": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "description": "Print-safe accent for headings/rules on white paper (the brand lime is too light to print)"
+        },
+        "summary": {
+          "description": "Defaults to the first About paragraph",
+          "type": "string"
+        },
+        "projectLimit": {
+          "description": "Max projects listed (default: all)",
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "accent"
+      ],
+      "description": "Printable CV page at /cv/ — built from the same content as the site"
+    }
+  },
+  "required": [
+    "meta",
+    "theme",
+    "effects",
+    "person",
+    "nav",
+    "sections",
+    "footer",
+    "cv"
+  ]
+}
