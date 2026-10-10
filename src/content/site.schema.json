@@ -20,7 +20,11 @@
         },
         "ogImage": {
           "type": "string",
-          "description": "1200×630 image used for link previews"
+          "description": "1200×630 JPEG used for link previews (WhatsApp, LinkedIn…); keep it under 300 KB and rename it when it changes, platforms cache by URL"
+        },
+        "ogImageAlt": {
+          "description": "Describes the link-preview image for screen readers",
+          "type": "string"
         },
         "keywords": {
           "type": "array",
