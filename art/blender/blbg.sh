@@ -5,4 +5,4 @@ set -e
 script="$1"; prelude="${2:-}"; blend="${3:-}"
 tmp=$(mktemp --suffix=.py)
 { echo "$prelude"; cat "$script"; echo; echo 'import json; print("RESULT", json.dumps(globals().get("result"), default=str))'; } > "$tmp"
-blender -b $blend --python "$tmp" --python-exit-code 1 2>&1 | grep -E '^RESULT|Error|Traceback' ; rm -f "$tmp"
+blender -b $blend --python "$tmp" --python-exit-code 1 2>&1 | grep -E '^RESULT|Error|Traceback|Heat|heat' ; rm -f "$tmp"

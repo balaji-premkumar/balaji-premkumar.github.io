@@ -10,7 +10,7 @@
     "build": "bun run content:check && tsc -b && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && bun scripts/prerender.ts",
     "preview": "vite preview",
     "lint": "eslint .",
-    "models": "gltf-transform optimize art/models/me.raw.glb src/assets/models/me.glb --compress meshopt --texture-compress webp --texture-size 2048 --simplify false && ffmpeg -loglevel error -y -i art/models/me-poster.png -c:v libwebp -quality 80 -pix_fmt yuva420p src/assets/models/me-poster.webp"
+    "models": "bun art/blender/fix_skeleton.ts art/models/me-v2.rigged.glb art/models/me-v2.fixed.glb && art/blender/blbg.sh art/blender/reskin.py 'SRC=\"art/models/me-v2.fixed.glb\"; OUT=\"art/models/me-v2.skinned.glb\"' && gltf-transform optimize art/models/me-v2.skinned.glb src/assets/models/me.glb --compress meshopt --texture-compress webp --texture-size 2048 --simplify false && ffmpeg -loglevel error -y -i art/models/me-poster.png -c:v libwebp -quality 80 -pix_fmt yuva420p src/assets/models/me-poster.webp"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

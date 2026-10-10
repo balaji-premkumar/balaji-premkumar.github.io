@@ -42,65 +42,64 @@ export function Navbar() {
 
   const close = () => setOpen(false);
 
+  const initials = `${site.person.firstName[0]}${site.person.lastName[0]}`;
+
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 px-6 transition-all duration-300 md:px-12 ${
-        scrolled ? 'border-b border-line bg-bg/70 py-4 backdrop-blur-md' : 'py-6'
+      className={`fixed inset-x-0 top-0 z-50 px-4 transition-all duration-300 md:px-8 ${
+        scrolled ? 'border-b-3 border-ink bg-bg/90 py-3 backdrop-blur-md' : 'py-5'
       }`}
     >
       <nav aria-label="Main" className="mx-auto flex max-w-7xl items-center justify-between">
-        <a href="#top" className="font-display text-2xl font-bold tracking-tighter text-accent" aria-label={`${site.person.firstName[0]}${site.person.lastName[0]}. — back to top`}>
-          {site.person.firstName[0]}
-          {site.person.lastName[0]}.
+        <a href="#top" className="brut-sm press grid size-12 place-items-center rounded-2xl bg-lime font-display text-xl font-extrabold" aria-label={`${initials} — back to top`}>
+          {initials}
         </a>
 
-        <ul className="hidden items-center gap-8 md:flex">
+        <ul className="hidden items-center gap-1 md:flex">
           {navItems.map(({ id, label }) => (
             <li key={id}>
               <a
                 href={`#${id}`}
                 aria-current={active === id ? 'location' : undefined}
-                className="group relative text-sm text-muted transition-colors hover:text-ink aria-[current]:text-ink"
+                className="rounded-full px-4 py-2 text-[0.95rem] font-bold transition-colors hover:bg-ink hover:text-bg aria-[current]:bg-ink aria-[current]:text-bg"
               >
                 {label}
-                <span className="absolute -bottom-1 left-0 h-px w-0 bg-accent transition-all duration-300 group-hover:w-full group-aria-[current]:w-full" />
               </a>
             </li>
           ))}
-          {cta && (
-            <li>
-              <a href={cta.href} className="ml-4 rounded-full border border-accent px-6 py-2 text-sm text-accent transition-colors hover:bg-accent hover:text-bg">
-                {cta.label}
-              </a>
-            </li>
-          )}
         </ul>
+
+        {cta && (
+          <a href={cta.href} className="brut-sm press hidden rounded-full bg-accent px-6 py-2.5 font-bold text-white md:block">
+            {cta.label} →
+          </a>
+        )}
 
         <button
           type="button"
-          className="relative z-50 text-ink md:hidden"
+          className="brut-sm relative z-50 grid size-12 place-items-center rounded-2xl bg-card md:hidden"
           onClick={() => setOpen(!open)}
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? 'Close menu' : 'Open menu'}
         >
-          {open ? <X size={28} /> : <Menu size={28} />}
+          {open ? <X size={26} /> : <Menu size={26} />}
         </button>
       </nav>
 
       <div
         id="mobile-menu"
         hidden={!open}
-        className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 bg-surface md:hidden"
+        className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-6 bg-yellow md:hidden"
       >
         {navItems.map(({ id, label }) => (
-          <a key={id} href={`#${id}`} onClick={close} className="font-display text-4xl text-ink hover:text-accent">
+          <a key={id} href={`#${id}`} onClick={close} className="font-display text-5xl font-extrabold hover:text-accent">
             {label}
           </a>
         ))}
         {cta && (
-          <a href={cta.href} onClick={close} className="mt-6 rounded-full bg-accent px-8 py-4 text-lg font-medium text-bg">
-            {cta.label}
+          <a href={cta.href} onClick={close} className="brut mt-6 rounded-full bg-accent px-8 py-4 text-lg font-bold text-white">
+            {cta.label} →
           </a>
         )}
       </div>

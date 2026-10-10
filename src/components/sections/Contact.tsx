@@ -1,50 +1,58 @@
-import { ArrowUpRight, Phone } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowUpRight, Check, Copy, Phone } from 'lucide-react';
 import { site, telHref, type SectionOf } from '../../content';
 import { Icon } from '../ui/Icon';
 
 export function Contact({ section, index }: { section: SectionOf<'contact'>; index: number }) {
-  const words = section.title.split(' ');
-  const last = words.pop();
+  const { email, phone, socials } = site.person;
+  const [copied, setCopied] = useState(false);
+  const copy = () =>
+    navigator.clipboard?.writeText(email).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1800);
+    });
 
   return (
-    <section id={section.id} data-scene="contact" aria-labelledby={`${section.id}-title`} className="relative flex min-h-svh items-center px-6 py-32">
-      <div className="mx-auto w-full max-w-5xl text-center">
-        <p data-reveal className="mb-6 text-xs uppercase tracking-[0.3em] text-accent">
-          {String(index).padStart(2, '0')} — {section.eyebrow}
+    <section id={section.id} aria-labelledby={`${section.id}-title`} className="px-6 py-16 md:py-24">
+      <div data-reveal className="brut mx-auto max-w-6xl rounded-[2rem] bg-orange px-6 py-16 text-center text-white md:px-12 md:py-24">
+        <p className="eyebrow mb-5">
+          <span className="brut-sm rounded-md bg-ink px-2 py-0.5 text-bg">{String(index).padStart(2, '0')}</span> {section.eyebrow}
         </p>
-        <h2 id={`${section.id}-title`} data-reveal className="font-display font-extrabold leading-[0.9] tracking-tighter" style={{ fontSize: 'clamp(2.25rem, 9vw, 8.5rem)' }}>
-          {words.join(' ')} <span className="text-accent">{last}.</span>
+        <h2 id={`${section.id}-title`} className="font-display text-[clamp(3.2rem,10vw,8.5rem)] leading-[0.9] font-extrabold tracking-[-0.03em]">
+          {section.title}.
         </h2>
-        <p data-reveal className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted">{section.text}</p>
+        <p className="mx-auto mt-6 max-w-2xl text-lg md:text-xl">{section.text}</p>
 
-        {section.cta && (
-          <div data-reveal className="mt-12">
-            <a href={section.cta.href} className="inline-flex items-center gap-3 rounded-full bg-accent px-10 py-5 text-lg font-medium text-bg transition-transform hover:scale-[1.04] active:scale-95">
+        <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          {section.cta && (
+            <a href={section.cta.href} className="brut press flex items-center gap-2 rounded-full bg-lime px-8 py-4 text-lg font-bold text-ink">
               {section.cta.label} <ArrowUpRight size={20} aria-hidden />
             </a>
-          </div>
-        )}
+          )}
+          <button type="button" onClick={copy} className="brut press flex items-center gap-2 rounded-full bg-card px-6 py-4 text-lg font-bold text-ink">
+            {copied ? <Check size={20} aria-hidden /> : <Copy size={20} aria-hidden />}
+            {copied ? 'Copied!' : email}
+            <span className="sr-only" aria-live="polite">{copied ? 'Email copied to clipboard' : ''}</span>
+          </button>
+        </div>
 
-        <ul data-reveal className="mt-16 flex flex-wrap justify-center gap-4">
-          {site.person.phone && (
+        <ul className="mt-10 flex flex-wrap justify-center gap-3">
+          {phone && (
             <li>
-              <a
-                href={telHref(site.person.phone)}
-                className="flex items-center gap-3 rounded-full border border-line bg-card/60 px-6 py-3 backdrop-blur-md transition-colors hover:border-accent/60"
-              >
-                <Phone size={18} className="text-accent" aria-hidden />
+              <a href={telHref(phone)} className="brut-sm press flex items-center gap-2 rounded-full bg-card px-5 py-2.5 font-bold text-ink">
+                <Phone size={18} aria-hidden />
                 <span className="sr-only">Phone: </span>
-                {site.person.phone}
+                {phone}
               </a>
             </li>
           )}
-          {site.person.socials.map((s) => (
+          {socials.map((s) => (
             <li key={s.label}>
               <a
                 href={s.href}
                 target={s.href.startsWith('http') ? '_blank' : undefined}
                 rel="noreferrer"
-                className="flex items-center gap-3 rounded-full border border-line bg-card/60 px-6 py-3 backdrop-blur-md transition-colors hover:border-accent/60"
+                className="brut-sm press flex items-center gap-2 rounded-full bg-card px-5 py-2.5 font-bold text-ink"
               >
                 <Icon name={s.label} icon={s.icon} className="size-5" />
                 {s.label}

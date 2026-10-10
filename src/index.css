@@ -3,50 +3,55 @@
 /* Colour values come from site.json → injected as --bg, --accent, … (see vite.config.ts). */
 @theme inline {
   --color-bg: var(--bg);
-  --color-surface: var(--surface);
   --color-card: var(--card);
   --color-ink: var(--ink);
   --color-accent: var(--accent);
-  --color-accent2: var(--accent2);
-  --color-muted: color-mix(in oklab, var(--ink) 62%, transparent);
-  --color-line: color-mix(in oklab, var(--ink) 9%, transparent);
+  --color-blue: var(--blue);
+  --color-orange: var(--orange);
+  --color-lime: var(--lime);
+  --color-yellow: var(--yellow);
+  --color-sky: var(--sky);
+  --color-mint: var(--mint);
+  --color-muted: color-mix(in oklab, var(--ink) 68%, transparent);
 }
 
 @theme {
-  --font-display: "Syne", system-ui, sans-serif;
-  --font-mono: "DM Mono", ui-monospace, monospace;
-  --font-serif: "Instrument Serif", Georgia, serif;
+  --font-display: "Bricolage Grotesque", system-ui, sans-serif;
+  --font-sans: "DM Sans", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
 @layer base {
   :root {
-    color-scheme: dark;
+    color-scheme: light;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
   }
 
   html {
+    overflow-x: clip; /* the tilted marquee deliberately runs past both edges */
     scroll-behavior: smooth;
-    scroll-padding-top: 5rem;
+    scroll-padding-top: 6rem;
   }
 
   body {
     min-width: 320px;
     overflow-x: clip;
-    background: var(--bg);
+    /* Faint dot grid so the flat cream never feels empty. */
+    background: radial-gradient(color-mix(in oklab, var(--ink) 9%, transparent) 1px, transparent 1.5px) 0 0 / 22px 22px, var(--bg);
     color: var(--ink);
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
+    font-weight: 500;
   }
 
   ::selection {
     background: var(--accent);
-    color: var(--bg);
+    color: #fff;
   }
 
   :focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 3px solid var(--blue);
     outline-offset: 3px;
-    border-radius: 4px;
+    border-radius: 6px;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -58,60 +63,43 @@
   }
 }
 
-/* Film grain over everything — cheap, adds depth on flat darks. */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  pointer-events: none;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+/* Neo-brutalist building blocks: thick ink border + hard offset shadow. */
+@utility brut {
+  border: 3px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+@utility brut-sm {
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
 }
 
-/* Static backdrop used when WebGL is off / unavailable / reduced motion. */
-.backdrop-fallback {
-  background:
-    radial-gradient(60vw 60vw at 50% 20%, color-mix(in oklab, var(--accent) 14%, transparent), transparent 60%),
-    radial-gradient(50vw 50vw at 80% 80%, color-mix(in oklab, var(--accent2) 10%, transparent), transparent 60%),
-    var(--bg);
+/* Press-able: lifts on hover, pushes into its shadow on click. */
+@utility press {
+  transition: transform 0.15s, box-shadow 0.15s;
+  &:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0 var(--ink); }
+  &:active { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--ink); }
 }
 
-.text-outline {
-  -webkit-text-stroke: 1px color-mix(in oklab, var(--ink) 35%, transparent);
-  color: transparent;
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
-/* Static avatar image for visitors without 3D; hidden once the 3D figure has loaded. */
-.avatar-poster {
-  transition: opacity 0.6s;
-}
+/* Static avatar image; hidden once the 3D figure has loaded. */
 html[data-avatar3d] .avatar-poster {
   opacity: 0;
   visibility: hidden;
 }
 
-/* Card deal (desktop + 3D): cards wait hidden until their thrown 3D card lands; focus always reveals. */
-html[data-deal] [data-deal-index]:not([data-dealt]):not(:focus-within) {
-  opacity: 0;
+/* Marquee: two identical halves, slide by one half for a seamless loop. */
+@keyframes marquee {
+  to { transform: translateX(-50%); }
 }
-
-/* Projects (desktop): the card nearest the centre is the highlight, the rest step back. Uses the individual `scale`
-   property (not `transform`) so it never fights GSAP's flip-in, which animates `transform`. */
-@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
-  .project-card {
-    /* Solid enough that the 3D scene behind (incl. the figure) never shows through the text. */
-    background-color: color-mix(in oklab, var(--card) 94%, transparent);
-    transition: scale 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.5s, box-shadow 0.5s, border-color 0.3s;
-  }
-  /* Dim with brightness, not opacity — cards stay opaque. */
-  ul:has(> [data-active]) > .project-card:not([data-active]) {
-    scale: 0.93;
-    filter: brightness(0.55) saturate(0.75);
-  }
-  .project-card[data-active] {
-    scale: 1.04;
-    border-color: color-mix(in oklab, var(--accent) 55%, transparent);
-    box-shadow: 0 0 70px -12px color-mix(in oklab, var(--accent) 45%, transparent);
-  }
+.marquee-track {
+  animation: marquee 40s linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
 }

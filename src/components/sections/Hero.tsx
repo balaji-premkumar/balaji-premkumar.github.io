@@ -1,38 +1,38 @@
-import { useRef } from 'react';
-import { ArrowDown } from 'lucide-react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { site, type SectionOf } from '../../content';
 import { asset, srcSet } from '../../lib/assets';
 import { gsap, MOTION_OK, useGSAP } from '../../lib/gsap';
+import { canRender3D } from '../../lib/webgl';
+
+const AvatarCanvas = lazy(() => import('../../three/Avatar'));
+
+const STICKERS = [
+  'top-[4%] left-0 -rotate-8 bg-yellow md:-left-[4%]',
+  'top-[42%] left-0 rotate-4 bg-card md:-left-[10%]',
+  'bottom-[14%] right-0 rotate-6 bg-orange text-white md:-right-[5%]',
+  'top-[10%] right-0 rotate-3 bg-mint md:-right-[2%]',
+];
 
 export function Hero({ section }: { section: SectionOf<'hero'> }) {
   const root = useRef<HTMLElement>(null);
   const roleRef = useRef<HTMLSpanElement>(null);
-  const { person, avatar } = site;
-  // With the 3D figure on the right, desktop text aligns left and the name shrinks to leave room.
-  const withAvatar = !!avatar?.enabled && !!avatar.poses.hero;
+  const { person } = site;
   const { primaryCta, secondaryCta } = section;
 
   useGSAP(
     () => {
       gsap.matchMedia().add(MOTION_OK, () => {
-        gsap.from('[data-hero-in]', { yPercent: 110, opacity: 0, duration: 1.1, stagger: 0.1, ease: 'power4.out', delay: 0.15 });
+        gsap.from('[data-hero-in]', { y: 40, opacity: 0, duration: 0.9, stagger: 0.08, ease: 'back.out(1.6)', delay: 0.1 });
+        gsap.from('[data-sticker]', { scale: 0, duration: 0.6, stagger: 0.12, ease: 'back.out(2.5)', delay: 0.6 });
 
         // Rotate through roles: slide current out, swap text, slide next in.
         const el = roleRef.current!;
         const roles = person.roles;
         const tl = gsap.timeline({ repeat: -1 });
         roles.forEach((_, i) => {
-          tl.to(el, { yPercent: -100, opacity: 0, duration: 0.4, ease: 'power2.in', delay: 2.2 })
+          tl.to(el, { yPercent: -100, opacity: 0, duration: 0.35, ease: 'power2.in', delay: 2.2 })
             .call(() => void (el.textContent = roles[(i + 1) % roles.length]!))
-            .fromTo(el, { yPercent: 100, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.5, ease: 'power3.out' });
-        });
-
-        // Content drifts up and fades as the hero scrolls away; the 3D core takes over.
-        gsap.to('[data-hero-content]', {
-          yPercent: -25,
-          opacity: 0,
-          ease: 'none',
-          scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom top', scrub: true },
+            .fromTo(el, { yPercent: 100, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.45, ease: 'back.out(2)' });
         });
       });
     },
@@ -40,84 +40,95 @@ export function Hero({ section }: { section: SectionOf<'hero'> }) {
   );
 
   return (
-    <section
-      ref={root}
-      id={section.id}
-      data-scene="hero"
-      // Mobile + figure: content sits high so the figure can stand below the buttons.
-      className={`relative flex min-h-svh justify-center px-6 ${withAvatar ? 'items-start pt-28 md:items-center md:pt-20' : 'items-center pt-20'}`}
-    >
-      <div
-        data-hero-content
-        className={`flex w-full flex-col items-center text-center ${withAvatar ? 'max-w-7xl lg:items-start lg:text-left' : 'max-w-5xl'}`}
-      >
-        {person.availability && (
-          <div className="mb-8 overflow-hidden">
-            <p data-hero-in className="flex items-center gap-4 text-xs uppercase tracking-[0.3em] text-accent">
-              <span className="relative flex size-2" aria-hidden>
-                <span className="absolute inline-flex size-full animate-ping rounded-full bg-accent opacity-60" />
-                <span className="relative inline-flex size-2 rounded-full bg-accent" />
+    <section ref={root} id={section.id} className="relative px-6 pt-32 pb-20 md:pt-36">
+      <div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1.2fr_1fr]">
+        <div>
+          {person.availability && (
+            <p data-hero-in className="brut-sm inline-flex items-center gap-2 rounded-full bg-lime px-4 py-1.5 font-bold">
+              <span className="relative flex size-2.5" aria-hidden>
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-ink opacity-50" />
+                <span className="relative inline-flex size-2.5 rounded-full bg-ink" />
               </span>
               {person.availability}
             </p>
-          </div>
-        )}
-
-        <h1
-          className={`font-display text-[clamp(2rem,8.2vw,8rem)] leading-[0.92] font-extrabold tracking-tighter ${withAvatar ? 'lg:text-[clamp(3rem,6.2vw,7rem)]' : ''}`}
-        >
-          <span className="block overflow-hidden pb-[0.06em]">
-            <span data-hero-in className="block">{person.firstName}</span>
-          </span>
-          <span className="block overflow-hidden pb-[0.06em]">
-            <span data-hero-in className="block text-accent">{person.lastName}</span>
-          </span>
-        </h1>
-
-        <p className="mt-8 h-8 overflow-hidden text-lg text-muted md:text-2xl" aria-hidden>
-          <span data-hero-in className="inline-block">
-            <span ref={roleRef} className="inline-block text-ink">{person.roles[0]}</span>
-          </span>
-        </p>
-        <p className="sr-only">{person.roles.join(', ')}</p>
-
-        <div className="mt-12 w-full overflow-hidden p-2 sm:w-auto">
-          <div data-hero-in className="flex flex-col items-center gap-4 sm:flex-row sm:gap-6">
-
-          <a href={primaryCta.href} className="w-full rounded-full bg-accent px-8 py-4 text-center font-medium text-bg transition-transform hover:scale-[1.04] active:scale-95 sm:w-auto">
-            {primaryCta.label}
-          </a>
-          {secondaryCta && (
-            <a
-              href={secondaryCta.href}
-              download={secondaryCta.href.endsWith('.pdf') || undefined}
-              className="w-full rounded-full border border-line bg-surface/50 px-8 py-4 text-center font-medium backdrop-blur-sm transition hover:scale-[1.04] hover:border-muted active:scale-95 sm:w-auto"
-            >
-              {secondaryCta.label}
-            </a>
           )}
+
+          <h1 className="mt-7 font-display text-[clamp(3.4rem,10vw,9rem)] leading-[0.9] font-extrabold tracking-[-0.03em]">
+            <span data-hero-in className="block">{person.firstName}</span>
+            <span data-hero-in className="brut mt-3 inline-block -rotate-2 rounded-[0.2em] bg-accent px-[0.12em] pb-[0.06em] text-white">
+              {person.lastName}
+            </span>
+          </h1>
+
+          <p data-hero-in className="mt-7 flex h-9 items-center overflow-hidden text-xl font-bold md:text-2xl" aria-hidden>
+            <span ref={roleRef} className="inline-block bg-[linear-gradient(transparent_55%,var(--yellow)_55%)]">{person.roles[0]}</span>
+          </p>
+          <p className="sr-only">{person.roles.join(', ')}</p>
+
+          <div data-hero-in className="mt-9 flex flex-col gap-4 sm:flex-row">
+            <a href={primaryCta.href} className="brut press rounded-full bg-lime px-8 py-4 text-center text-lg font-bold">
+              {primaryCta.label} ↓
+            </a>
+            {secondaryCta && (
+              <a
+                href={secondaryCta.href}
+                download={secondaryCta.href.endsWith('.pdf') || undefined}
+                className="brut press rounded-full bg-card px-8 py-4 text-center text-lg font-bold"
+              >
+                {secondaryCta.label}
+              </a>
+            )}
           </div>
         </div>
-      </div>
 
-      {withAvatar && avatar.poster && (
+        <AvatarStage stickers={section.stickers} />
+      </div>
+    </section>
+  );
+}
+
+/** Blue blob with the figure on it: static poster first (SSR / no WebGL), the 3D figure loaded once the page is idle.
+ * The poster is a frame of the canvas itself (idle pose), so the swap doesn't shift. */
+function AvatarStage({ stickers = [] }: { stickers?: string[] }) {
+  const avatar = site.avatar?.enabled ? site.avatar : undefined;
+  const [live, setLive] = useState(false);
+
+  useEffect(() => {
+    if (!avatar || !canRender3D()) return;
+    const start = () => setLive(true);
+    if ('requestIdleCallback' in window) {
+      const id = requestIdleCallback(start, { timeout: 1500 });
+      return () => cancelIdleCallback(id);
+    }
+    const id = setTimeout(start, 300);
+    return () => clearTimeout(id);
+  }, [avatar]);
+
+  return (
+    <div className="relative mx-auto aspect-square w-full max-w-[30rem] lg:mr-0">
+      <div className="brut absolute inset-[6%] rounded-[44%_56%_52%_48%/52%_44%_56%_48%] bg-blue" aria-hidden />
+      {avatar?.poster && (
         <img
           src={asset(avatar.poster)}
           srcSet={srcSet(avatar.poster)}
-          sizes="40vw"
+          sizes="30rem"
           alt={avatar.alt}
-          width={800}
-          height={1100}
-          loading="lazy" // hidden below lg → never fetched on phones
+          width={926}
+          height={926}
           decoding="async"
-          className="avatar-poster pointer-events-none absolute right-[5%] bottom-[4svh] hidden h-[78svh] w-auto lg:block"
+          className="avatar-poster absolute inset-0 size-full object-contain transition-opacity duration-500"
         />
       )}
-
-      <a href={`#${site.sections.find((s) => s.type !== 'hero' && !s.hidden)?.id ?? ''}`} className={`absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-2 text-xs uppercase tracking-[0.3em] text-muted hover:text-ink ${withAvatar ? 'hidden md:flex' : 'flex'}`}>
-        Scroll
-        <ArrowDown size={16} className="animate-bounce" aria-hidden />
-      </a>
-    </section>
+      {avatar && live && (
+        <Suspense fallback={null}>
+          <AvatarCanvas config={avatar} />
+        </Suspense>
+      )}
+      {stickers.map((s, i) => (
+        <span key={s} data-sticker className={`brut-sm pointer-events-none absolute rounded-xl px-3 py-1.5 font-bold whitespace-nowrap md:text-lg ${STICKERS[i % STICKERS.length]}`}>
+          {s}
+        </span>
+      ))}
+    </div>
   );
 }

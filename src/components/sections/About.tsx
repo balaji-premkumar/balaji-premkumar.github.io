@@ -1,8 +1,9 @@
 import { useRef } from 'react';
-import type { SectionOf } from '../../content';
+import { pop, type SectionOf } from '../../content';
 import { gsap, MOTION_OK, useGSAP } from '../../lib/gsap';
 import { SectionHeader } from '../ui/SectionHeader';
 
+/** Bento: quote tile, story tile, one colour tile per stat. */
 export function About({ section, index }: { section: SectionOf<'about'>; index: number }) {
   const root = useRef<HTMLElement>(null);
 
@@ -16,7 +17,7 @@ export function About({ section, index }: { section: SectionOf<'about'>; index: 
             snap: { textContent: 1 },
             duration: 1.6,
             ease: 'power2.out',
-            scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+            scrollTrigger: { trigger: el, start: 'top 90%', once: true },
           });
         });
       });
@@ -25,35 +26,39 @@ export function About({ section, index }: { section: SectionOf<'about'>; index: 
   );
 
   return (
-    <section ref={root} id={section.id} data-scene="about" aria-labelledby={`${section.id}-title`} className="relative px-6 py-32 md:py-48">
+    <section ref={root} id={section.id} aria-labelledby={`${section.id}-title`} className="px-6 py-16 md:py-24">
       <div className="mx-auto max-w-7xl">
         <SectionHeader index={index} eyebrow={section.eyebrow} title={section.title} id={section.id} />
 
-        <div className="grid gap-16 lg:grid-cols-[1.1fr_1fr] lg:gap-24">
-          <blockquote data-reveal className="font-serif text-4xl italic leading-tight text-ink md:text-5xl">
-            <span className="text-accent">“</span>
-            {section.quote}
-            <span className="text-accent">”</span>
+        <div className="grid gap-6 md:grid-cols-2">
+          <blockquote data-reveal className="brut flex flex-col justify-between gap-10 rounded-3xl bg-yellow p-8 md:p-10">
+            <p className="font-display text-3xl leading-[1.1] font-extrabold md:text-4xl">“{section.quote}”</p>
+            <span aria-hidden className="text-7xl leading-none">✦</span>
           </blockquote>
 
-          <div className="space-y-6 text-base leading-relaxed text-muted md:text-lg">
+          <div data-reveal className="brut space-y-4 rounded-3xl bg-card p-8 text-lg leading-relaxed md:p-10">
             {section.paragraphs.map((p) => (
-              <p key={p} data-reveal>{p}</p>
+              <p key={p}>{p}</p>
             ))}
           </div>
-        </div>
 
-        <dl className="mt-24 grid grid-cols-1 gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-3">
-          {section.stats.map((s) => (
-            <div key={s.label} data-reveal className="flex flex-col-reverse gap-2 bg-bg/80 p-10 backdrop-blur-sm">
-              <dt className="text-xs uppercase tracking-[0.25em] text-muted">{s.label}</dt>
-              <dd className="font-display text-6xl font-extrabold text-ink md:text-7xl">
-                <span data-count>{s.value}</span>
-                <span className="text-accent">{s.suffix}</span>
-              </dd>
-            </div>
-          ))}
-        </dl>
+          <dl className="grid gap-6 sm:grid-cols-3 md:col-span-2">
+            {section.stats.map((s, i) => (
+              <div
+                key={s.label}
+                data-reveal
+                style={pop(i + 1)}
+                className="brut press flex flex-col-reverse justify-end gap-1 rounded-3xl p-8"
+              >
+                <dt className="text-lg font-bold">{s.label}</dt>
+                <dd className="font-display text-7xl font-extrabold tracking-tight">
+                  <span data-count>{s.value}</span>
+                  {s.suffix}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
       </div>
     </section>
   );

@@ -11,7 +11,7 @@ type Props = {
 export function Icon({ name, icon, className = 'size-6' }: Props) {
   if (!icon) {
     return (
-      <span aria-hidden className={`${className} grid place-items-center rounded-md bg-accent/15 text-[0.6rem] font-medium text-accent`}>
+      <span aria-hidden className={`${className} grid place-items-center rounded-md border-2 border-ink bg-yellow font-mono text-[0.6rem] text-ink`}>
         {initials(name)}
       </span>
     );

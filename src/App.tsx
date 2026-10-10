@@ -3,8 +3,8 @@ import { sections, type Section, type SectionOf } from './content';
 import { gsap, MOTION_OK, ScrollTrigger, useGSAP } from './lib/gsap';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
-import { Backdrop } from './components/layout/Backdrop';
 import { Hero } from './components/sections/Hero';
+import { Marquee } from './components/sections/Marquee';
 import { About } from './components/sections/About';
 import { Experience } from './components/sections/Experience';
 import { Skills } from './components/sections/Skills';
@@ -16,6 +16,7 @@ type SectionProps<T extends Section['type']> = { section: SectionOf<T>; index: n
 /** Section `type` in site.json → component. Add a type to the schema + here to create a new kind of section. */
 const registry: { [T in Section['type']]: ComponentType<SectionProps<T>> } = {
   hero: Hero,
+  marquee: Marquee,
   about: About,
   experience: Experience,
   skills: Skills,
@@ -39,16 +40,15 @@ export default function App() {
   let n = 0;
   return (
     <>
-      <a href="#main" className="sr-only z-[200] rounded bg-accent px-4 py-2 text-bg focus:not-sr-only focus:fixed focus:top-4 focus:left-4">
+      <a href="#main" className="sr-only z-[200] rounded-full bg-ink px-4 py-2 text-bg focus:not-sr-only focus:fixed focus:top-4 focus:left-4">
         Skip to content
       </a>
-      <Backdrop />
       <Navbar />
       <main id="main" className="relative">
         <span id="top" className="absolute top-0" aria-hidden />
         {sections.map((section) => {
           const Component = registry[section.type] as ComponentType<SectionProps<Section['type']>>;
-          return <Component key={section.id} section={section as never} index={section.type === 'hero' ? 0 : ++n} />;
+          return <Component key={section.id} section={section as never} index={section.type === 'hero' || section.type === 'marquee' ? 0 : ++n} />;
         })}
       </main>
       <Footer />

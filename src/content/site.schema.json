@@ -41,68 +41,73 @@
       "properties": {
         "bg": {
           "type": "string",
-          "pattern": "^#[0-9a-fA-F]{6}$"
-        },
-        "surface": {
-          "type": "string",
-          "pattern": "^#[0-9a-fA-F]{6}$"
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "description": "Page background"
         },
         "card": {
           "type": "string",
-          "pattern": "^#[0-9a-fA-F]{6}$"
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "description": "Plain card background"
         },
         "ink": {
           "type": "string",
-          "pattern": "^#[0-9a-fA-F]{6}$"
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "description": "Text, borders and hard shadows"
         },
         "accent": {
           "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "description": "Primary brand colour (name highlight, main buttons)"
+        },
+        "blue": {
+          "type": "string",
           "pattern": "^#[0-9a-fA-F]{6}$"
         },
-        "accent2": {
+        "orange": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "lime": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "yellow": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "sky": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "mint": {
           "type": "string",
           "pattern": "^#[0-9a-fA-F]{6}$"
         }
       },
       "required": [
         "bg",
-        "surface",
         "card",
         "ink",
         "accent",
-        "accent2"
-      ]
+        "blue",
+        "orange",
+        "lime",
+        "yellow",
+        "sky",
+        "mint"
+      ],
+      "description": "Every key becomes a CSS variable (--bg, --accent, …); cards cycle through the pop colours"
     },
     "effects": {
       "type": "object",
       "properties": {
         "webgl": {
           "type": "boolean",
-          "description": "false = no 3D, CSS-only visuals"
-        },
-        "particles": {
-          "type": "object",
-          "properties": {
-            "desktop": {
-              "type": "integer",
-              "minimum": 0,
-              "maximum": 9007199254740991
-            },
-            "mobile": {
-              "type": "integer",
-              "minimum": 0,
-              "maximum": 9007199254740991
-            }
-          },
-          "required": [
-            "desktop",
-            "mobile"
-          ]
+          "description": "false = no 3D avatar, the poster image is shown instead"
         }
       },
       "required": [
-        "webgl",
-        "particles"
+        "webgl"
       ]
     },
     "avatar": {
@@ -122,11 +127,6 @@
         "alt": {
           "type": "string",
           "description": "Accessible description of the figure"
-        },
-        "height": {
-          "type": "number",
-          "exclusiveMinimum": 0,
-          "description": "World-space height in the 3D scene at scale 1"
         },
         "followPointer": {
           "type": "number",
@@ -150,140 +150,21 @@
               "description": "Played when the hero comes into view",
               "type": "string"
             },
-            "throw": {
-              "description": "Played for each dealt card",
-              "type": "string"
-            },
             "cheer": {
-              "description": "Played when the contact section comes into view",
+              "description": "Played when the figure is clicked",
               "type": "string"
             }
           },
           "required": [
             "idle"
           ]
-        },
-        "handBone": {
-          "description": "Bone the dealt card sits in, e.g. \"mixamorig:RightHand\"",
-          "type": "string"
-        },
-        "deal": {
-          "description": "Desktop only: the figure throws each card onto its slot as it scrolls into view",
-          "type": "object",
-          "properties": {
-            "section": {
-              "type": "string",
-              "description": "Section type whose cards get dealt, e.g. \"projects\""
-            },
-            "releaseAt": {
-              "type": "number",
-              "minimum": 0,
-              "maximum": 1,
-              "description": "Point in the throw clip where the card leaves the hand (0–1)"
-            },
-            "flight": {
-              "type": "number",
-              "exclusiveMinimum": 0,
-              "description": "Seconds from release to landing"
-            },
-            "arc": {
-              "type": "number",
-              "minimum": 0,
-              "maximum": 1,
-              "description": "Height of the flight curve above its ends, as a fraction of the viewport height"
-            },
-            "spins": {
-              "type": "number",
-              "minimum": 0,
-              "description": "Full turns the card makes in flight"
-            },
-            "speed": {
-              "default": 1,
-              "description": "Throw animation speed multiplier (1 = Mixamo timing)",
-              "type": "number",
-              "exclusiveMinimum": 0
-            }
-          },
-          "required": [
-            "section",
-            "releaseAt",
-            "flight",
-            "arc",
-            "spins"
-          ]
-        },
-        "poses": {
-          "type": "object",
-          "propertyNames": {
-            "type": "string",
-            "description": "Section type: hero | about | experience | skills | projects | contact"
-          },
-          "additionalProperties": {
-            "type": "object",
-            "properties": {
-              "pos": {
-                "type": "array",
-                "prefixItems": [
-                  {
-                    "type": "number"
-                  },
-                  {
-                    "type": "number"
-                  },
-                  {
-                    "type": "number"
-                  }
-                ],
-                "items": false,
-                "minItems": 3,
-                "maxItems": 3,
-                "description": "x, y, z — y is the feet"
-              },
-              "mobile": {
-                "type": "array",
-                "prefixItems": [
-                  {
-                    "type": "number"
-                  },
-                  {
-                    "type": "number"
-                  },
-                  {
-                    "type": "number"
-                  }
-                ],
-                "items": false,
-                "minItems": 3,
-                "maxItems": 3
-              },
-              "scale": {
-                "type": "number",
-                "minimum": 0
-              },
-              "mobileScale": {
-                "type": "number",
-                "minimum": 0
-              },
-              "turn": {
-                "description": "Base rotation in degrees (negative = turned toward the left)",
-                "type": "number"
-              }
-            },
-            "required": [
-              "pos",
-              "scale"
-            ]
-          },
-          "description": "Where the figure stands while each section is on screen; sections not listed hide it"
         }
       },
       "required": [
         "enabled",
         "model",
         "alt",
-        "height",
-        "followPointer",
-        "poses"
+        "followPointer"
       ]
     },
     "person": {
@@ -435,12 +316,48 @@
                   "label",
                   "href"
                 ]
+              },
+              "stickers": {
+                "description": "Short tilted labels around the avatar, e.g. \"13+ yrs 🚀\"",
+                "maxItems": 4,
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               }
             },
             "required": [
               "type",
               "id",
               "primaryCta"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "marquee"
+              },
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$"
+              },
+              "hidden": {
+                "type": "boolean"
+              },
+              "items": {
+                "description": "Words scrolling across the strip; defaults to every skill name",
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "type",
+              "id"
             ]
           },
           {
@@ -538,6 +455,14 @@
               "title": {
                 "type": "string"
               },
+              "finish": {
+                "description": "Shown when the career road reaches today, e.g. \"13+ years and counting\"",
+                "type": "string"
+              },
+              "pointsLabel": {
+                "description": "Heading of the side card on the career road (the board shows role/company/period)",
+                "type": "string"
+              },
               "items": {
                 "minItems": 1,
                 "type": "array",
@@ -574,7 +499,7 @@
                       "type": "string"
                     },
                     "color": {
-                      "description": "Glow colour of this stop in the 3D timeline",
+                      "description": "Card colour of this stop (text turns light/dark to match)",
                       "type": "string",
                       "pattern": "^#[0-9a-fA-F]{6}$"
                     }
