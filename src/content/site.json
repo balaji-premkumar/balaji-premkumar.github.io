@@ -4,7 +4,8 @@
     "title": "Balaji Premkumar — Senior Software Engineer",
     "description": "Balaji Premkumar — Senior Software Engineer with 13+ years building enterprise systems with .NET, React and the cloud. Explore projects, skills and experience.",
     "url": "https://balaji-premkumar.github.io/",
-    "ogImage": "/og.jpg",
+    "ogImage": "/og-v2.jpg",
+    "ogImageAlt": "Balaji Premkumar, Senior Software Engineer: a cartoon 3D figure of him greeting with a vanakkam",
     "keywords": [".NET", "React", "Full Stack", "Software Engineer", "Portfolio"]
   },
   "theme": {

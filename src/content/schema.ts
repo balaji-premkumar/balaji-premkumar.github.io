@@ -132,7 +132,8 @@ export const siteSchema = z.object({
     title: z.string(),
     description: z.string(),
     url: z.url(),
-    ogImage: z.string().describe('1200×630 image used for link previews'),
+    ogImage: z.string().describe('1200×630 JPEG used for link previews (WhatsApp, LinkedIn…); keep it under 300 KB and rename it when it changes, platforms cache by URL'),
+    ogImageAlt: z.string().optional().describe('Describes the link-preview image for screen readers'),
     keywords: z.array(z.string()).optional(),
   }),
   theme: z.object({

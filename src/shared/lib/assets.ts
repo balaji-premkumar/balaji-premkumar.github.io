@@ -3,7 +3,7 @@
  *
  * Path conventions in site.json:
  *   "art/era-2012-php.webp"  → src/assets/art/era-2012-php.webp, bundled: content-hashed URL (+ responsive srcset)
- *   "/og.jpg"                → public/og.jpg, served as-is (stable URL, e.g. for crawlers)
+ *   "/og-v2.jpg"             → public/og-v2.jpg, served as-is (stable URL, e.g. for crawlers)
  *   "https://…"              → external
  */
 
