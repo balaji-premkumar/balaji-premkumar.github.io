@@ -40,6 +40,14 @@ const heroSection = z.object({
   title: z.string().optional(),
   primaryCta: link,
   secondaryCta: link.optional(),
+  stickers: z.array(z.string()).max(4).optional().describe('Short tilted labels around the avatar, e.g. "13+ yrs 🚀"'),
+});
+
+const marqueeSection = z.object({
+  type: z.literal('marquee'),
+  id: slug,
+  hidden: z.boolean().optional(),
+  items: z.array(z.string()).min(1).optional().describe('Words scrolling across the strip; defaults to every skill name'),
 });
 
 const aboutSection = z.object({
@@ -57,6 +65,8 @@ const aboutSection = z.object({
 const experienceSection = z.object({
   type: z.literal('experience'),
   ...sectionBase,
+  finish: z.string().optional().describe('Shown when the career road reaches today, e.g. "13+ years and counting"'),
+  pointsLabel: z.string().optional().describe('Heading of the side card on the career road (the board shows role/company/period)'),
   items: z.array(z.object({
     role: z.string(),
     company: z.string(),
@@ -65,7 +75,7 @@ const experienceSection = z.object({
     points: z.array(z.string()).min(1),
     tech: z.array(z.string()).optional(),
     art: z.string().optional().describe('Backdrop image shown behind this career stop (path under src/assets, e.g. "art/x.webp")'),
-    color: hex.optional().describe('Glow colour of this stop in the 3D timeline'),
+    color: hex.optional().describe('Card colour of this stop (text turns light/dark to match)'),
   })).min(1),
 });
 
@@ -108,6 +118,7 @@ const contactSection = z.object({
 
 export const section = z.discriminatedUnion('type', [
   heroSection,
+  marqueeSection,
   aboutSection,
   experienceSection,
   skillsSection,
@@ -125,16 +136,19 @@ export const siteSchema = z.object({
     keywords: z.array(z.string()).optional(),
   }),
   theme: z.object({
-    bg: hex,
-    surface: hex,
-    card: hex,
-    ink: hex,
-    accent: hex,
-    accent2: hex,
-  }),
+    bg: hex.describe('Page background'),
+    card: hex.describe('Plain card background'),
+    ink: hex.describe('Text, borders and hard shadows'),
+    accent: hex.describe('Primary brand colour (name highlight, main buttons)'),
+    blue: hex,
+    orange: hex,
+    lime: hex,
+    yellow: hex,
+    sky: hex,
+    mint: hex,
+  }).describe('Every key becomes a CSS variable (--bg, --accent, …); cards cycle through the pop colours'),
   effects: z.object({
-    webgl: z.boolean().describe('false = no 3D, CSS-only visuals'),
-    particles: z.object({ desktop: z.number().int().min(0), mobile: z.number().int().min(0) }),
+    webgl: z.boolean().describe('false = no 3D avatar, the poster image is shown instead'),
   }),
   avatar: z
     .object({
@@ -142,41 +156,16 @@ export const siteSchema = z.object({
       model: z.string().describe('GLB under src/assets, e.g. "models/me.glb" (built by `bun run models`)'),
       poster: z.string().optional().describe('Static image shown when 3D is off (no WebGL / reduced motion)'),
       alt: z.string().describe('Accessible description of the figure'),
-      height: z.number().positive().describe('World-space height in the 3D scene at scale 1'),
       followPointer: z.number().min(0).max(60).describe('Max degrees the figure turns toward the cursor'),
+      handScale: z.number().positive().optional().describe('Enlarge the hands (both *Hand bones) so gestures read at small sizes; 1 = as modelled'),
       clips: z
         .object({
           idle: z.string(),
           greet: z.string().optional().describe('Played when the hero comes into view'),
-          throw: z.string().optional().describe('Played for each dealt card'),
-          cheer: z.string().optional().describe('Played when the contact section comes into view'),
+          cheer: z.string().optional().describe('Played when the figure is clicked'),
         })
         .optional()
         .describe('Animation clip names inside the GLB (Mixamo actions)'),
-      handBone: z.string().optional().describe('Bone the dealt card sits in, e.g. "mixamorig:RightHand"'),
-      deal: z
-        .object({
-          section: z.string().describe('Section type whose cards get dealt, e.g. "projects"'),
-          releaseAt: z.number().min(0).max(1).describe('Point in the throw clip where the card leaves the hand (0–1)'),
-          flight: z.number().positive().describe('Seconds from release to landing'),
-          arc: z.number().min(0).max(1).describe('Height of the flight curve above its ends, as a fraction of the viewport height'),
-          spins: z.number().min(0).describe('Full turns the card makes in flight'),
-          speed: z.number().positive().default(1).describe('Throw animation speed multiplier (1 = Mixamo timing)'),
-        })
-        .optional()
-        .describe('Desktop only: the figure throws each card onto its slot as it scrolls into view'),
-      poses: z
-        .record(
-          z.string().describe('Section type: hero | about | experience | skills | projects | contact'),
-          z.object({
-            pos: z.tuple([z.number(), z.number(), z.number()]).describe('x, y, z — y is the feet'),
-            mobile: z.tuple([z.number(), z.number(), z.number()]).optional(),
-            scale: z.number().min(0),
-            mobileScale: z.number().min(0).optional(),
-            turn: z.number().optional().describe('Base rotation in degrees (negative = turned toward the left)'),
-          }),
-        )
-        .describe('Where the figure stands while each section is on screen; sections not listed hide it'),
     })
     .optional(),
   person: z.object({
@@ -198,7 +187,7 @@ export const siteSchema = z.object({
   sections: z.array(section).min(1).describe('Rendered top to bottom in this order'),
   footer: z.object({ text: z.string() }),
   cv: z.object({
-    accent: hex.describe('Print-safe accent for headings/rules on white paper (the brand lime is too light to print)'),
+    accent: hex.describe('Print-safe accent for dates and the job title on white paper (needs 4.5:1 on white)'),
     summary: z.string().optional().describe('Defaults to the first About paragraph'),
     projectLimit: z.number().int().positive().optional().describe('Max projects listed (default: all)'),
   }).describe('Printable CV page at /cv/ — built from the same content as the site'),

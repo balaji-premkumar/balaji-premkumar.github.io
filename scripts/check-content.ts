@@ -10,7 +10,7 @@ import { existsSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { z } from 'zod';
 import { siteSchema, type SiteContent } from '../src/content/schema';
-import { iconUrl } from '../src/lib/icons';
+import { iconUrl } from '../src/shared/lib/icons';
 import raw from '../src/content/site.json';
 
 const root = join(import.meta.dir, '..');

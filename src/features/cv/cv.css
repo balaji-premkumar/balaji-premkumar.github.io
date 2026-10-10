@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+/* Colours come from site.json (--bg, --ink, --accent, --yellow); --cv-accent is the print-safe accent. */
+@theme inline {
+  --color-cv-bg: var(--bg);
+  --color-cv-brand: var(--accent);
+  --color-cv-accent: var(--cv-accent);
+  --color-cv-ink: var(--ink);
+  --color-cv-mark: var(--yellow);
+}
+
+@theme {
+  --font-display: "Bricolage Grotesque", system-ui, sans-serif;
+  --font-sans: "DM Sans", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+@layer base {
+  body {
+    background: radial-gradient(color-mix(in oklab, var(--ink) 9%, transparent) 1px, transparent 1.5px) 0 0 / 22px 22px, var(--bg);
+    color: var(--color-cv-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* A4 sheet on screen, in the site's neo-brutalist frame; full-bleed on paper. */
+.cv-sheet {
+  width: min(210mm, 100%);
+  min-height: 297mm;
+  border: 3px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--ink);
+}
+
+@page {
+  size: A4;
+  margin: 12mm 0;
+}
+
+/* Let the header band bleed to the top edge of page one. */
+@page :first {
+  margin-top: 0;
+}
+
+@media print {
+  body {
+    background: white;
+  }
+  .cv-sheet {
+    width: auto;
+    min-height: 0;
+    border: 0;
+    box-shadow: none;
+  }
+  /* Keep the band, name pill and highlighter colours when printing / saving as PDF. */
+  .cv-sheet,
+  .cv-band {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

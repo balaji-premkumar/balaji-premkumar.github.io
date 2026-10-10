@@ -74,6 +74,7 @@ function siteHead(): Plugin {
 
 export default defineConfig({
   plugins: [react(), tailwindcss(), imagetools(), siteHead()],
+  resolve: { alias: { '@': resolve(__dirname, 'src') } },
   // three.js is ~250 KB gz and lives in its own lazy chunk (loaded after idle), so the default warning is noise.
   build: {
     chunkSizeWarningLimit: 1000,

@@ -8,32 +8,27 @@
     "keywords": [".NET", "React", "Full Stack", "Software Engineer", "Portfolio"]
   },
   "theme": {
-    "bg": "#0a0a0f",
-    "surface": "#111118",
-    "card": "#16161f",
-    "ink": "#eeeef2",
-    "accent": "#c8f060",
-    "accent2": "#60c8f0"
+    "bg": "#FFF8EE",
+    "card": "#FFFFFF",
+    "ink": "#14110F",
+    "accent": "#FF3D8B",
+    "blue": "#2563EB",
+    "orange": "#FF6B1A",
+    "lime": "#B6F23A",
+    "yellow": "#FFD23F",
+    "sky": "#7DD3FC",
+    "mint": "#86EFAC"
   },
   "effects": {
-    "webgl": true,
-    "particles": { "desktop": 2400, "mobile": 900 }
+    "webgl": true
   },
   "avatar": {
     "enabled": true,
     "model": "models/me.glb",
     "poster": "models/me-poster.webp",
-    "alt": "Clay figurine of Balaji in a white shirt and dark trousers",
-    "height": 2.6,
-    "followPointer": 28,
-    "clips": { "idle": "idle", "greet": "wave", "throw": "throw", "cheer": "thumbs-up" },
-    "handBone": "mixamorig:RightHand",
-    "deal": { "section": "projects", "releaseAt": 0.5, "flight": 0.7, "arc": 0.22, "spins": 1, "speed": 1.4 },
-    "poses": {
-      "hero": { "pos": [2.8, -1.25, 0.2], "mobile": [0, -2.55, 0], "scale": 0.88, "mobileScale": 0.6, "turn": -14 },
-      "projects": { "pos": [-3.25, -2.45, 0.6], "scale": 0.74, "mobileScale": 0, "turn": 38 },
-      "contact": { "pos": [3.9, -2.2, -0.6], "scale": 0.7, "mobileScale": 0, "turn": -32 }
-    }
+    "alt": "Cartoon 3D figure of Balaji in a white shirt, navy trousers and lime sneakers",
+    "followPointer": 24,
+    "clips": { "idle": "idle", "greet": "vanakkam", "cheer": "thumbs-up" }
   },
   "person": {
     "firstName": "Balaji",
@@ -51,7 +46,7 @@
       "Enterprise Solution Architect"
     ],
     "socials": [
-      { "label": "GitHub", "href": "https://github.com/balaji-premkumar", "icon": "si:github/ffffff" },
+      { "label": "GitHub", "href": "https://github.com/balaji-premkumar", "icon": "si:github" },
       { "label": "LinkedIn", "href": "https://linkedin.com/in/balaji--premkumar", "icon": "dev:linkedin-plain" },
       { "label": "Email", "href": "mailto:balaji00710@gmail.com", "icon": "si:gmail" }
     ]
@@ -64,7 +59,12 @@
       "type": "hero",
       "id": "hero",
       "primaryCta": { "label": "View Work", "href": "#projects" },
-      "secondaryCta": { "label": "Download CV", "href": "/cv/?print=1" }
+      "secondaryCta": { "label": "Download CV", "href": "/cv/?print=1" },
+      "stickers": ["13+ yrs 🚀", "React ⚛", ".NET wizard"]
+    },
+    {
+      "type": "marquee",
+      "id": "stack"
     },
     {
       "type": "about",
@@ -89,6 +89,8 @@
       "navLabel": "Experience",
       "eyebrow": "13 years in the making",
       "title": "Career Path",
+      "finish": "13+ years and counting",
+      "pointsLabel": "Responsibilities",
       "items": [
         {
           "role": "Web Developer",
@@ -102,7 +104,7 @@
           ],
           "tech": ["PHP", "MySQL", "jQuery", "CodeIgniter"],
           "art": "art/era-2012-php.webp",
-          "color": "#60c8f0"
+          "color": "#7DD3FC"
         },
         {
           "role": "Full Stack Engineer",
@@ -116,7 +118,7 @@
           ],
           "tech": ["Node.js", "React", "MongoDB", "SignalR", "AWS"],
           "art": "art/era-2017-node.webp",
-          "color": "#7ee0a8"
+          "color": "#86EFAC"
         },
         {
           "role": "Senior Software Engineer",
@@ -130,7 +132,7 @@
           ],
           "tech": [".NET Core", "C#", "SQL Server", "Azure", "React"],
           "art": "art/era-2022-dotnet.webp",
-          "color": "#a8e86c"
+          "color": "#FF6B1A"
         },
         {
           "role": "Supervising Associate",
@@ -144,7 +146,7 @@
           ],
           "tech": [".NET 10", "React", "MSSQL", "Azure DevOps", "GitHub Actions", "AI"],
           "art": "art/era-2023-ai.webp",
-          "color": "#c8f060"
+          "color": "#FFD23F"
         }
       ]
     },
@@ -171,7 +173,7 @@
           "label": "Frontend",
           "items": [
             { "name": "React", "icon": "dev:react-original" },
-            { "name": "Next.js", "icon": "si:nextdotjs/ffffff" },
+            { "name": "Next.js", "icon": "si:nextdotjs" },
             { "name": "AngularJS", "icon": "dev:angularjs-original" },
             { "name": "WPF", "icon": "dev:windows11-original" },
             { "name": "Android", "icon": "dev:android-original" },
@@ -208,12 +210,12 @@
             { "name": "Azure", "icon": "dev:azure-original" },
             { "name": "Docker", "icon": "dev:docker-original" },
             { "name": "Git", "icon": "dev:git-original" },
-            { "name": "GitHub", "icon": "si:github/ffffff" },
+            { "name": "GitHub", "icon": "si:github" },
             { "name": "ELK", "icon": "dev:elasticsearch-original" },
             { "name": "Nginx", "icon": "dev:nginx-original" },
             { "name": "Selenium", "icon": "dev:selenium-original" },
-            { "name": "pfSense", "icon": "si:pfsense/ffffff" },
-            { "name": "VMware", "icon": "si:vmware/ffffff" }
+            { "name": "pfSense", "icon": "si:pfsense" },
+            { "name": "VMware", "icon": "si:vmware" }
           ]
         },
         {
@@ -311,6 +313,6 @@
     "text": "Designed & built by Balaji Premkumar"
   },
   "cv": {
-    "accent": "#4d7c0f"
+    "accent": "#2563EB"
   }
 }

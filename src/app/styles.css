@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+/* Colour values come from site.json → injected as --bg, --accent, … (see vite.config.ts). */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-accent: var(--accent);
+  --color-blue: var(--blue);
+  --color-orange: var(--orange);
+  --color-lime: var(--lime);
+  --color-yellow: var(--yellow);
+  --color-sky: var(--sky);
+  --color-mint: var(--mint);
+  --color-muted: color-mix(in oklab, var(--ink) 68%, transparent);
+}
+
+@theme {
+  --font-display: "Bricolage Grotesque", system-ui, sans-serif;
+  --font-sans: "DM Sans", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  html {
+    overflow-x: clip; /* the tilted marquee deliberately runs past both edges */
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    min-width: 320px;
+    overflow-x: clip;
+    /* Faint dot grid so the flat cream never feels empty. */
+    background: radial-gradient(color-mix(in oklab, var(--ink) 9%, transparent) 1px, transparent 1.5px) 0 0 / 22px 22px, var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-weight: 500;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--blue);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Neo-brutalist building blocks: thick ink border + hard offset shadow. */
+@utility brut {
+  border: 3px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+@utility brut-sm {
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+/* Press-able: lifts on hover, pushes into its shadow on click. */
+@utility press {
+  transition: transform 0.15s, box-shadow 0.15s;
+  &:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0 var(--ink); }
+  &:active { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--ink); }
+}
+
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Static avatar image; hidden once the 3D figure has loaded. */
+html[data-avatar3d] .avatar-poster {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Marquee: two identical halves, slide by one half for a seamless loop. */
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 40s linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}

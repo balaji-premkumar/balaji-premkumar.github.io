@@ -42,13 +42,20 @@ function llmsTxt() {
       lines.push('## Experience', ...s.items.map((i) => `- ${i.role}, ${i.company} (${i.period})`), '');
     }
     if (s.type === 'projects') {
-      lines.push('## Projects', ...s.items.map((p) => `- ${p.name}: ${p.description}${'links' in p && p.links?.demo ? ` (${p.links.demo})` : ''}`), '');
+      const link = (p: (typeof s.items)[number]) => p.links?.demo ?? p.links?.source;
+      lines.push('## Projects', ...s.items.map((p) => `- ${link(p) ? `[${p.name}](${link(p)})` : p.name}: ${p.description}`), '');
     }
     if (s.type === 'skills') {
       lines.push('## Skills', ...s.groups.map((g) => `- ${g.label}: ${g.items.map((i) => i.name).join(', ')}`), '');
     }
   }
-  lines.push('## Contact', ...person.socials.map((s) => `- ${s.label}: ${s.href}`), '');
+  lines.push(
+    '## Links',
+    `- [Portfolio](${meta.url})`,
+    `- [CV](${new URL('/cv/', meta.url).href})`,
+    ...person.socials.map((s) => `- [${s.label}](${s.href})`),
+    '',
+  );
   return lines.join('\n');
 }
 
