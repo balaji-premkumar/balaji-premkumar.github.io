@@ -25,6 +25,8 @@ re-validates it and stops with a readable error if something is wrong.
 | Avatar gestures | `avatar.clips`: `idle`, `greet` (on load and hover), `cheer` (on click); names from the action library |
 | Turn 3D off | `effects.webgl: false` (poster image + card timeline instead) |
 | SEO / link preview | `meta` (`title`, `description`, `ogImage`, `ogImageAlt`) |
+| Analytics / Tag Manager | `analytics.gtmId` (`GTM-…`) and/or `googleId` (`G-…`); setup guide and tracked events in [`analytics/README.md`](analytics/README.md) |
+| Search Console verification | `meta.googleSiteVerification` (HTML-tag method; optional) |
 | Printable CV | `cv`: print accent, optional `summary`, `projectLimit` |
 
 ### Adding a job

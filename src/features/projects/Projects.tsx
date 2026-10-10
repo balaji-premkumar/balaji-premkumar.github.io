@@ -81,13 +81,13 @@ export function Projects({ section, index }: { section: SectionOf<'projects'>; i
                 {(p.links?.demo || p.links?.source) && (
                   <div className="mt-6 flex gap-3">
                     {p.links.demo && (
-                      <a href={p.links.demo} target="_blank" rel="noreferrer" className="brut-sm flex items-center gap-1.5 rounded-full bg-lime px-4 py-1.5 font-bold">
+                      <a href={p.links.demo} data-track="project_click" data-track-label={`${p.name} · live`} target="_blank" rel="noreferrer" className="brut-sm flex items-center gap-1.5 rounded-full bg-lime px-4 py-1.5 font-bold">
                         Live <ArrowUpRight size={16} aria-hidden />
                         <span className="sr-only">: {p.name}</span>
                       </a>
                     )}
                     {p.links.source && (
-                      <a href={p.links.source} target="_blank" rel="noreferrer" className="brut-sm flex items-center gap-1.5 rounded-full bg-card px-4 py-1.5 font-bold">
+                      <a href={p.links.source} data-track="project_click" data-track-label={`${p.name} · source`} target="_blank" rel="noreferrer" className="brut-sm flex items-center gap-1.5 rounded-full bg-card px-4 py-1.5 font-bold">
                         <Icon name="GitHub" icon="si:github" className="size-4" /> Source
                         <span className="sr-only">: {p.name}</span>
                       </a>

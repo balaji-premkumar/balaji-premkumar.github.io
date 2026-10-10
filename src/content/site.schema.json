@@ -26,6 +26,10 @@
           "description": "Describes the link-preview image for screen readers",
           "type": "string"
         },
+        "googleSiteVerification": {
+          "description": "Google Search Console \"HTML tag\" verification code (only the content value)",
+          "type": "string"
+        },
         "keywords": {
           "type": "array",
           "items": {
@@ -101,6 +105,22 @@
         "mint"
       ],
       "description": "Every key becomes a CSS variable (--bg, --accent, …); cards cycle through the pop colours"
+    },
+    "analytics": {
+      "description": "Remove to turn tracking off. Only added to production builds, never the dev server",
+      "type": "object",
+      "properties": {
+        "gtmId": {
+          "description": "Google Tag Manager container ID. When set, only GTM loads and GA4 is configured inside GTM (see analytics/README.md)",
+          "type": "string",
+          "pattern": "^GTM-[A-Z0-9]+$"
+        },
+        "googleId": {
+          "description": "Google Analytics 4 Measurement ID; loaded directly (gtag.js) when there is no gtmId",
+          "type": "string",
+          "pattern": "^G-[A-Z0-9]+$"
+        }
+      }
     },
     "effects": {
       "type": "object",

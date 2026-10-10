@@ -134,6 +134,7 @@ export const siteSchema = z.object({
     url: z.url(),
     ogImage: z.string().describe('1200×630 JPEG used for link previews (WhatsApp, LinkedIn…); keep it under 300 KB and rename it when it changes, platforms cache by URL'),
     ogImageAlt: z.string().optional().describe('Describes the link-preview image for screen readers'),
+    googleSiteVerification: z.string().optional().describe('Google Search Console "HTML tag" verification code (only the content value)'),
     keywords: z.array(z.string()).optional(),
   }),
   theme: z.object({
@@ -148,6 +149,13 @@ export const siteSchema = z.object({
     sky: hex,
     mint: hex,
   }).describe('Every key becomes a CSS variable (--bg, --accent, …); cards cycle through the pop colours'),
+  analytics: z
+    .object({
+      gtmId: z.string().regex(/^GTM-[A-Z0-9]+$/).optional().describe('Google Tag Manager container ID. When set, only GTM loads and GA4 is configured inside GTM (see analytics/README.md)'),
+      googleId: z.string().regex(/^G-[A-Z0-9]+$/).optional().describe('Google Analytics 4 Measurement ID; loaded directly (gtag.js) when there is no gtmId'),
+    })
+    .optional()
+    .describe('Remove to turn tracking off. Only added to production builds, never the dev server'),
   effects: z.object({
     webgl: z.boolean().describe('false = no 3D avatar, the poster image is shown instead'),
   }),

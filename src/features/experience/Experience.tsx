@@ -1,6 +1,7 @@
 import { lazy, Suspense, useMemo, useRef, useSyncExternalStore } from 'react';
 import { pop, type SectionOf } from '@/content';
 import { activeCard, locate, plan, scrollScreens } from './careerPlan';
+import { track } from '@/shared/lib/analytics';
 import { gsap, MOTION_OK, useGSAP } from '@/shared/lib/gsap';
 import { canRender3D } from '@/shared/lib/webgl';
 import { Timeline } from './Timeline';
@@ -36,6 +37,8 @@ function Road({ section, index }: Props) {
       const finish = root.current!.querySelector<HTMLElement>('[data-finish]');
       const state = { p: 0 };
       let shown = -2;
+      let completed = false;
+      let entered = 0; // when the road was entered; nav jumps scroll through it in ~1s and must not count
       const sync = () => {
         progress.current = state.p;
         const at = locate(segments, state.p);
@@ -46,6 +49,13 @@ function Road({ section, index }: Props) {
         }
         marks.forEach((m, i) => m.toggleAttribute('data-done', i < at.stop || (i === at.stop && at.phase !== 'walk')));
         finish?.toggleAttribute('data-active', at.phase === 'finish' && at.t > 0.35);
+        if (state.p === 0) entered = 0;
+        else entered ||= performance.now();
+        // ponytail: dwell-time heuristic (8s) to tell reading from jumping; per-stop visibility if it misfires.
+        if (!completed && at.phase === 'finish' && performance.now() - entered > 8000) {
+          completed = true; // once per visit: actually scrolled through the whole career
+          track('career_complete');
+        }
       };
       gsap.matchMedia().add(MOTION_OK, () => {
         gsap.to(state, {

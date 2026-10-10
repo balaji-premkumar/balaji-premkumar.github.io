@@ -25,11 +25,11 @@ export function Contact({ section, index }: { section: SectionOf<'contact'>; ind
 
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           {section.cta && (
-            <a href={section.cta.href} className="brut press flex items-center gap-2 rounded-full bg-lime px-8 py-4 text-lg font-bold text-ink">
+            <a href={section.cta.href} data-track="contact_click" data-track-label="cta" className="brut press flex items-center gap-2 rounded-full bg-lime px-8 py-4 text-lg font-bold text-ink">
               {section.cta.label} <ArrowUpRight size={20} aria-hidden />
             </a>
           )}
-          <button type="button" onClick={copy} className="brut press flex items-center gap-2 rounded-full bg-card px-6 py-4 text-lg font-bold text-ink">
+          <button type="button" onClick={copy} data-track="email_copy" className="brut press flex items-center gap-2 rounded-full bg-card px-6 py-4 text-lg font-bold text-ink">
             {copied ? <Check size={20} aria-hidden /> : <Copy size={20} aria-hidden />}
             {copied ? 'Copied!' : email}
             <span className="sr-only" aria-live="polite">{copied ? 'Email copied to clipboard' : ''}</span>
@@ -39,7 +39,7 @@ export function Contact({ section, index }: { section: SectionOf<'contact'>; ind
         <ul className="mt-10 flex flex-wrap justify-center gap-3">
           {phone && (
             <li>
-              <a href={telHref(phone)} className="brut-sm press flex items-center gap-2 rounded-full bg-card px-5 py-2.5 font-bold text-ink">
+              <a href={telHref(phone)} data-track="contact_click" data-track-label="phone" className="brut-sm press flex items-center gap-2 rounded-full bg-card px-5 py-2.5 font-bold text-ink">
                 <Phone size={18} aria-hidden />
                 <span className="sr-only">Phone: </span>
                 {phone}
@@ -50,6 +50,8 @@ export function Contact({ section, index }: { section: SectionOf<'contact'>; ind
             <li key={s.label}>
               <a
                 href={s.href}
+                data-track="contact_click"
+                data-track-label={s.label}
                 target={s.href.startsWith('http') ? '_blank' : undefined}
                 rel="noreferrer"
                 className="brut-sm press flex items-center gap-2 rounded-full bg-card px-5 py-2.5 font-bold text-ink"

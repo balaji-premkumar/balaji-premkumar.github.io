@@ -20,6 +20,7 @@
     "sky": "#7DD3FC",
     "mint": "#86EFAC"
   },
+  "analytics": { "gtmId": "GTM-P8Q3P3F2", "googleId": "G-XWF0Z76G86" },
   "effects": {
     "webgl": true
   },
