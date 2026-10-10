@@ -63,13 +63,14 @@ export function Hero({ section }: { section: SectionOf<'hero'> }) {
           <p className="sr-only">{person.roles.join(', ')}</p>
 
           <div data-hero-in className="mt-9 flex flex-col gap-4 sm:flex-row">
-            <a href={primaryCta.href} className="brut press rounded-full bg-lime px-8 py-4 text-center text-lg font-bold">
+            <a href={primaryCta.href} data-track="cta_click" className="brut press rounded-full bg-lime px-8 py-4 text-center text-lg font-bold">
               {primaryCta.label} ↓
             </a>
             {secondaryCta && (
               <a
                 href={secondaryCta.href}
                 download={secondaryCta.href.endsWith('.pdf') || undefined}
+                data-track={secondaryCta.href.includes('/cv/') ? undefined : 'cta_click'}
                 className="brut press rounded-full bg-card px-8 py-4 text-center text-lg font-bold"
               >
                 {secondaryCta.label}

@@ -27,7 +27,7 @@ export default function AvatarCanvas({ config }: { config: Config }) {
   }, []);
 
   return (
-    <div ref={wrap} role="img" aria-label={config.alt} className="absolute inset-0 cursor-pointer">
+    <div ref={wrap} role="img" aria-label={config.alt} data-track="avatar_click" data-track-label="hero" className="absolute inset-0 cursor-pointer">
       <Canvas
         frameloop={onScreen ? 'always' : 'never'}
         dpr={[1, 2]}

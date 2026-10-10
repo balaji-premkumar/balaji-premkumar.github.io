@@ -42,7 +42,7 @@ export function CvPage() {
     <>
       <nav className="sticky top-0 z-10 mb-6 flex items-center justify-between gap-4 border-b-[3px] border-cv-ink bg-cv-bg px-6 py-3 text-sm print:hidden">
         <a href="/" className="font-bold text-cv-ink/75 hover:text-cv-ink">← Back to portfolio</a>
-        <button type="button" onClick={() => window.print()} className="rounded-full border-2 border-cv-ink bg-cv-brand px-5 py-2 font-bold text-cv-ink shadow-[3px_3px_0_var(--color-cv-ink)] transition-transform hover:-translate-y-0.5">
+        <button type="button" onClick={() => window.print()} data-track="cv_print" data-track-label="button" className="rounded-full border-2 border-cv-ink bg-cv-brand px-5 py-2 font-bold text-cv-ink shadow-[3px_3px_0_var(--color-cv-ink)] transition-transform hover:-translate-y-0.5">
           Print / Save as PDF
         </button>
       </nav>

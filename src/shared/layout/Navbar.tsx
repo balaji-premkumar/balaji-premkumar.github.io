@@ -70,7 +70,7 @@ export function Navbar() {
         </ul>
 
         {cta && (
-          <a href={cta.href} className="brut-sm press hidden rounded-full bg-accent px-6 py-2.5 font-bold text-ink md:block">
+          <a href={cta.href} data-track="hire_me_click" data-track-label="nav" className="brut-sm press hidden rounded-full bg-accent px-6 py-2.5 font-bold text-ink md:block">
             {cta.label} →
           </a>
         )}
@@ -98,7 +98,7 @@ export function Navbar() {
           </a>
         ))}
         {cta && (
-          <a href={cta.href} onClick={close} className="brut mt-6 rounded-full bg-accent px-8 py-4 text-lg font-bold text-ink">
+          <a href={cta.href} onClick={close} data-track="hire_me_click" data-track-label="menu" className="brut mt-6 rounded-full bg-accent px-8 py-4 text-lg font-bold text-ink">
             {cta.label} →
           </a>
         )}

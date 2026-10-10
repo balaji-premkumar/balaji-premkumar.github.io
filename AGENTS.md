@@ -46,6 +46,9 @@ Before reporting work done: `bun run lint && bun test && bun run build` all pass
   `eyebrow`. Fonts: Bricolage Grotesque (display), DM Sans (body), JetBrains Mono (labels).
 - Animations: GSAP via `@/shared/lib/gsap` (`useGSAP`, wrap motion in `gsap.matchMedia().add(MOTION_OK, …)`).
   No Framer Motion; GSAP covers DOM and scroll, R3F covers 3D.
+- Analytics: interactive elements worth measuring get `data-track="<event>"` (+ optional `data-track-label`); events
+  are listed in `src/shared/lib/analytics.ts` `EVENTS` and must match `analytics/gtm-container.json` (tested).
+  Tracking scripts are injected only in production builds (see `analytics/README.md`).
 - Comments explain *why*, briefly. Match the surrounding density.
 
 ## Avatar and gestures
