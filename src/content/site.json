@@ -26,6 +26,7 @@
     "alt": "Clay figurine of Balaji in a white shirt and dark trousers",
     "height": 2.6,
     "followPointer": 28,
+    "handScale": 1.6,
     "clips": { "idle": "idle", "greet": "wave", "throw": "throw", "cheer": "thumbs-up" },
     "handBone": "mixamorig:RightHand",
     "deal": { "section": "projects", "releaseAt": 0.5, "flight": 0.7, "arc": 0.22, "spins": 1, "speed": 1.4 },

@@ -134,6 +134,11 @@
           "maximum": 60,
           "description": "Max degrees the figure turns toward the cursor"
         },
+        "handScale": {
+          "description": "Enlarge the hands (both *Hand bones) so gestures read at small sizes; 1 = as modelled",
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
         "clips": {
           "description": "Animation clip names inside the GLB (Mixamo actions)",
           "type": "object",

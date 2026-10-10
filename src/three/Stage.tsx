@@ -1,4 +1,5 @@
 import { Suspense, useEffect, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { sections, site } from '../content';
@@ -75,24 +76,36 @@ export default function Stage() {
     [],
   );
 
+  const canvas = {
+    className: `transition-opacity duration-1000 ${ready ? 'opacity-100' : 'opacity-0'}`,
+    dpr: q.dpr,
+    camera: { position: [0, 0, CAMERA_Z] as [number, number, number], fov: 50, near: 0.1, far: 60 },
+    gl: { antialias: false, alpha: true, powerPreference: 'high-performance' as const },
+  };
+
   return (
-    <Canvas
-      className={`transition-opacity duration-1000 ${ready ? 'opacity-100' : 'opacity-0'}`}
-      dpr={q.dpr}
-      camera={{ position: [0, 0, CAMERA_Z], fov: 50, near: 0.1, far: 60 }}
-      gl={{ antialias: false, alpha: true, powerPreference: 'high-performance' }}
-      onCreated={() => setReady(true)}
-    >
-      <Rig />
-      <Particles palette={palette} count={q.particles} />
-      <Core palette={palette} detail={q.detail} heroAnchor={heroAnchor} />
-      {avatar && (
-        <Suspense fallback={null}>
-          <Avatar config={avatar} palette={palette} />
-        </Suspense>
-      )}
-      {timelineColors.length > 0 && <Timeline colors={timelineColors} palette={palette} />}
-      {galaxyGroups.length > 0 && <SkillGalaxy groups={galaxyGroups} />}
-    </Canvas>
+    <>
+      <Canvas {...canvas} onCreated={() => setReady(true)}>
+        <Rig />
+        <Particles palette={palette} count={q.particles} />
+        <Core palette={palette} detail={q.detail} heroAnchor={heroAnchor} />
+        {timelineColors.length > 0 && <Timeline colors={timelineColors} palette={palette} />}
+        {galaxyGroups.length > 0 && <SkillGalaxy groups={galaxyGroups} />}
+      </Canvas>
+      {/* The figure gets its own transparent layer above the page (below the navbar and the dealt card in flight),
+          so it stands in front of the project cards instead of behind them. Same camera rig → lines up with the core. */}
+      {avatar &&
+        createPortal(
+          <div aria-hidden className="pointer-events-none fixed inset-0 z-30">
+            <Canvas {...canvas}>
+              <Rig />
+              <Suspense fallback={null}>
+                <Avatar config={avatar} palette={palette} />
+              </Suspense>
+            </Canvas>
+          </div>,
+          document.body,
+        )}
+    </>
   );
 }

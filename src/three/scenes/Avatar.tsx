@@ -80,6 +80,12 @@ export function Avatar({ config, palette }: { config: Config; palette: Palette }
     [model, config.handBone],
   );
 
+  const hands = useMemo(() => {
+    const out: THREE.Object3D[] = [];
+    model.traverse((o) => void ((o as THREE.Bone).isBone && /hand$/i.test(o.name) && out.push(o)));
+    return out;
+  }, [model]);
+
   // ---- animation
   const anim = useMemo(() => {
     const mixer = new THREE.AnimationMixer(model);
@@ -164,6 +170,7 @@ export function Avatar({ config, palette }: { config: Config; palette: Palette }
     const c = card.current;
     if (!g || !b || !c) return;
     anim.mixer.update(dt);
+    if (config.handScale) for (const h of hands) h.scale.setScalar(config.handScale); // after the mixer: clips key scale too
 
     // Blend the configured poses by how visible each section is (same approach as the core).
     let w = 0;

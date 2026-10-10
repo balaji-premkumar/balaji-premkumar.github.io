@@ -144,6 +144,7 @@ export const siteSchema = z.object({
       alt: z.string().describe('Accessible description of the figure'),
       height: z.number().positive().describe('World-space height in the 3D scene at scale 1'),
       followPointer: z.number().min(0).max(60).describe('Max degrees the figure turns toward the cursor'),
+      handScale: z.number().positive().optional().describe('Enlarge the hands (both *Hand bones) so gestures read at small sizes; 1 = as modelled'),
       clips: z
         .object({
           idle: z.string(),
