@@ -34,8 +34,8 @@ Add an event: name it in `EVENTS` in `src/shared/lib/analytics.ts`, put `data-tr
 2. Copy the container ID (`GTM-XXXXXXX`), put it in `site.json` → `analytics.gtmId`, and deploy.
 3. In GTM: **Admin → Import container** → choose `analytics/gtm-container.json` → workspace *Default* →
    **Merge** (*Rename conflicting*). This adds:
-   - **Google tag (GA4)** for `G-XWF0Z76G86`, firing on every page.
-   - **GA4 event: site events**: forwards every event above to GA4 with its `label`.
+   - **Google tag - GA4** for `G-XWF0Z76G86`, firing on every page.
+   - **GA4 event - site events**: forwards every event above to GA4 with its `label`.
    - Trigger **Site events** and variables **DLV - label**, **GA4 Measurement ID**.
 4. **Preview** (Tag Assistant) on the live site to check tags fire, then **Submit → Publish**.
 
