@@ -74,7 +74,7 @@ const experienceSection = z.object({
     location: z.string().optional(),
     points: z.array(z.string()).min(1),
     tech: z.array(z.string()).optional(),
-    art: z.string().optional().describe('Backdrop image shown behind this career stop (path under src/assets, e.g. "art/x.webp")'),
+    art: z.string().optional().describe('Unused since the career road (kept so older content still validates)'),
     color: hex.optional().describe('Card colour of this stop (text turns light/dark to match)'),
   })).min(1),
 });
@@ -162,11 +162,11 @@ export const siteSchema = z.object({
       clips: z
         .object({
           idle: z.string(),
-          greet: z.string().optional().describe('Played when the hero comes into view'),
+          greet: z.string().optional().describe('Played when the figure appears and on hover, e.g. "vanakkam"'),
           cheer: z.string().optional().describe('Played when the figure is clicked'),
         })
         .optional()
-        .describe('Animation clip names inside the GLB (Mixamo actions)'),
+        .describe('Action names from src/shared/three/gestures.ts (idle, vanakkam, thumbs-up, wave, nod, shrug, point, cheer, think…), or clip names if the GLB ships its own'),
     })
     .optional(),
   person: z.object({

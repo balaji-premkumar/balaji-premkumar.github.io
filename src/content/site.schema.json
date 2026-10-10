@@ -144,14 +144,14 @@
           "exclusiveMinimum": 0
         },
         "clips": {
-          "description": "Animation clip names inside the GLB (Mixamo actions)",
+          "description": "Action names from src/shared/three/gestures.ts (idle, vanakkam, thumbs-up, wave, nod, shrug, point, cheer, think…), or clip names if the GLB ships its own",
           "type": "object",
           "properties": {
             "idle": {
               "type": "string"
             },
             "greet": {
-              "description": "Played when the hero comes into view",
+              "description": "Played when the figure appears and on hover, e.g. \"vanakkam\"",
               "type": "string"
             },
             "cheer": {
@@ -499,7 +499,7 @@
                       }
                     },
                     "art": {
-                      "description": "Backdrop image shown behind this career stop (path under src/assets, e.g. \"art/x.webp\")",
+                      "description": "Unused since the career road (kept so older content still validates)",
                       "type": "string"
                     },
                     "color": {
