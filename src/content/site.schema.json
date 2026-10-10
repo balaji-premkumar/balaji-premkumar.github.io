@@ -761,7 +761,7 @@
         "accent": {
           "type": "string",
           "pattern": "^#[0-9a-fA-F]{6}$",
-          "description": "Print-safe accent for headings/rules on white paper (the brand lime is too light to print)"
+          "description": "Print-safe accent for dates and the job title on white paper (needs 4.5:1 on white)"
         },
         "summary": {
           "description": "Defaults to the first About paragraph",

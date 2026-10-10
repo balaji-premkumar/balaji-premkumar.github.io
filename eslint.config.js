@@ -23,7 +23,7 @@ export default defineConfig([
   {
     // react-three-fiber is imperative by design: three.js objects are created once (useMemo, may use
     // Math.random for procedural geometry) and mutated every frame in useFrame, outside React's render.
-    files: ['src/three/**/*.{ts,tsx}'],
+    files: ['src/**/three/**/*.{ts,tsx}'],
     rules: {
       'react-hooks/immutability': 'off',
       'react-hooks/purity': 'off',

@@ -187,7 +187,7 @@ export const siteSchema = z.object({
   sections: z.array(section).min(1).describe('Rendered top to bottom in this order'),
   footer: z.object({ text: z.string() }),
   cv: z.object({
-    accent: hex.describe('Print-safe accent for headings/rules on white paper (the brand lime is too light to print)'),
+    accent: hex.describe('Print-safe accent for dates and the job title on white paper (needs 4.5:1 on white)'),
     summary: z.string().optional().describe('Defaults to the first About paragraph'),
     projectLimit: z.number().int().positive().optional().describe('Max projects listed (default: all)'),
   }).describe('Printable CV page at /cv/ — built from the same content as the site'),
